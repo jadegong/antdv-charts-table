@@ -1,3 +1,5 @@
+<!-- v0.0.1 2022/06/16 gqd Init version; -->
+<!--        2023/01/03 gqd Change to insensitive name; -->
 <template>
     <a-layout>
         <a-layout-header>
@@ -10,7 +12,7 @@
                 mode="horizontal"
                 :style="{ lineHeight: '64px' }"
             >
-                <a-menu-item key="onelinkuiChartsVue">onelinkui-charts-vue</a-menu-item>
+                <a-menu-item key="antdvChartsTable">antdv-charts-table</a-menu-item>
             </a-menu>
         </a-layout-header>
         <a-layout style="padding: 0 4px;">
@@ -69,7 +71,7 @@ export default {
     },
     data() {
         return {
-            selectedTopKeys: ['onelinkuiChartsVue'],
+            selectedTopKeys: ['antdvChartsTable'],
             selectedSideKeys: [],
             openSideKeys: [],
             menus: [],

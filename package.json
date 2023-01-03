@@ -1,5 +1,5 @@
 {
-  "name": "onelinkui-charts-vue",
+  "name": "antdv-charts-table",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-lib": "vue-cli-service build --target lib --name onelinkui-charts -dest lib packages/index.js"
+    "build-lib": "vue-cli-service build --target lib --name antdv-charts-table -dest lib packages/index.js"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
