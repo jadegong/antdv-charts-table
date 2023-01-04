@@ -1,4 +1,4 @@
-# onelinkui-charts-vue
+# antdv-charts-table
 
 ## Project setup
 ```
@@ -8,6 +8,10 @@ npm install
 ### Compiles and hot-reloads for development
 ```
 npm run serve
+```
+Or
+```
+npm run start
 ```
 
 ### Compiles and minifies for production
