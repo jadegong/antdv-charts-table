@@ -2,8 +2,8 @@
 <!--        2022/08/16 gqd 使用普通变量接收echarts实例，否则echarts实例会赋值给ref响应式Proxy对象，导致tooltip不显示; -->
 <!--        2023/01/16 gqd 修改为typescript; -->
 <template>
-  <div ref="domChart" style="height: 100%; width: 100%;">
-    <span style="display: none;">{{option.type}}</span>
+  <div ref="domChart" style="height: 100%; width: 100%">
+    <span style="display: none">{{ option.type }}</span>
   </div>
 </template>
 <script lang="ts">
@@ -18,160 +18,169 @@ import { light } from '../theme/light';
 let pieChart = null;
 
 export default defineComponent({
-    name: 'PieChart',
-    props: {
-        option: {
-            type: Object,
-            default: () => {},
+  name: 'PieChart',
+  props: {
+    option: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  data() {
+    return {
+      flagClickEvent: false,
+      defaultOption: toolUtil.extend({}, defaultConfig.pie.option),
+    };
+  },
+  mounted() {
+    if (this.option) {
+      pieChart = echarts.init(
+        this.$refs.domChart,
+        this.option.theme === 'dark' ? dark : light
+      );
+      this.setPieOption(this.option);
+      window.addEventListener('resize', this.onWindowResize);
+    }
+  },
+  updated() {
+    this.setPieOption(this.option);
+    pieChart.resize();
+  },
+  beforeUnmount() {
+    if (pieChart) {
+      pieChart.clear();
+      pieChart.dispose();
+    }
+    window.removeEventListener('resize', this.onWindowResize);
+  },
+  methods: {
+    onWindowResize() {
+      pieChart.resize();
+    },
+    setPieOption(option) {
+      // const self = this;
+      const opts = toolUtil.merge(this.defaultOption, option, true);
+      const optionPie = {
+        tooltip: {
+          show: opts.showTooltip || false,
+          formatter(params, ticket, callback) {
+            return option.toolTipFormatter.call(this, params, ticket, callback);
+          },
         },
-    },
-    data() {
-        return {
-            flagClickEvent: false,
-            defaultOption: toolUtil.extend({}, defaultConfig.pie.option),
-        };
-    },
-    mounted() {
-        if (this.option) {
-            pieChart = echarts.init(this.$refs.domChart, this.option.theme === 'dark' ? dark : light);
-            this.setPieOption(this.option);
-            window.addEventListener('resize', this.onWindowResize);
-        }
-    },
-    updated() {
-        this.setPieOption(this.option);
-        pieChart.resize();
-    },
-    beforeUnmount() {
-        if (pieChart) {
-            pieChart.clear();
-            pieChart.dispose();
-        }
-        window.removeEventListener('resize', this.onWindowResize);
-    },
-    methods: {
-        onWindowResize() {
-            pieChart.resize();
-        },
-        setPieOption(option) {
-            // const self = this;
-            const opts = toolUtil.merge(this.defaultOption, option, true);
-            const optionPie = {
-                tooltip: {
-                    show: opts.showTooltip || false,
-                    formatter(params, ticket, callback) {
-                        return option.toolTipFormatter.call(this, params, ticket, callback);
-                    },
-                },
-                title: {
-                    text: opts.title,
-                    x: 'center',
-                    y: 10,
-                    /* textStyle: {
+        title: {
+          text: opts.title,
+          x: 'center',
+          y: 10,
+          /* textStyle: {
                         fontSize: 14,
                         color: '#fff'
                     } */
-                },
-                legend: {
-                    show: opts.legendShow,
-                    orient: opts.orient,
-                    left: opts.legendLeft,
-                    top: opts.legendTop,
-                    align: opts.legendAlign,
-                    itemHeight: 8,
-                    itemWidth: 8,
-                    // textStyle: {color: '#fff'},
-                    itemGap: 20,
-                    data: [],
-                    // pageIconInactiveColor: '#2f4554',
-                    // pageIconColor: '#aaa',
-                    pageTextStyle: {
-                        // color: '#aaa',
-                    },
-                },
-                series: [
-                    {
-                        name: '数量占比',
-                        type: 'pie',
-                        center: opts.pieCenter,
-                        radius: opts.pieRadius,
-                        startAngle: 90,
-                        minAngle: 5,
-                        selectedMode: 'multiple',
-                        clockWise: true,
-                        itemStyle: {
-                            normal: {},
-                        },
-                        roseType: opts.roseType === 'false' ? false : opts.roseType,
-                        labelLine: {
-                            normal: {
-                                show: true,
-                                /* lineStyle: {
+        },
+        legend: {
+          show: opts.legendShow,
+          orient: opts.orient,
+          left: opts.legendLeft,
+          top: opts.legendTop,
+          align: opts.legendAlign,
+          itemHeight: 8,
+          itemWidth: 8,
+          // textStyle: {color: '#fff'},
+          itemGap: 20,
+          data: [],
+          // pageIconInactiveColor: '#2f4554',
+          // pageIconColor: '#aaa',
+          pageTextStyle: {
+            // color: '#aaa',
+          },
+        },
+        series: [
+          {
+            name: '数量占比',
+            type: 'pie',
+            center: opts.pieCenter,
+            radius: opts.pieRadius,
+            startAngle: 90,
+            minAngle: 5,
+            selectedMode: 'multiple',
+            clockWise: true,
+            itemStyle: {
+              normal: {},
+            },
+            roseType: opts.roseType === 'false' ? false : opts.roseType,
+            labelLine: {
+              normal: {
+                show: true,
+                /* lineStyle: {
                                     color: opts.labelLineColor?opts.labelLineColor:''
                                 }, */
-                                length: 30,
-                            },
-                        },
-                        label: {
-                            normal: {
-                                show: true,
-                                textStyle: {
-                                    // color: '#000',
-                                    baseline: 'bottom',
-                                    fontSize: 12,
-                                    fontFamily: 'SimHei,Arial, Verdana, sans-serif',
-                                },
-                                formatter(params) {
-                                    if (opts.labelFormatter) {
-                                        return eval(opts.labelFormatter).call(this, params, toolUtil);
-                                    }
-                                    return `${params.name}:${toolUtil.commafy(params.value, 2)}(${params.percent}%)`;
-                                },
-                            },
-                        },
-                        data: [],
-                    },
-                ],
-            };
+                length: 30,
+              },
+            },
+            label: {
+              normal: {
+                show: true,
+                textStyle: {
+                  // color: '#000',
+                  baseline: 'bottom',
+                  fontSize: 12,
+                  fontFamily: 'SimHei,Arial, Verdana, sans-serif',
+                },
+                formatter(params) {
+                  if (opts.labelFormatter) {
+                    return eval(opts.labelFormatter).call(
+                      this,
+                      params,
+                      toolUtil
+                    );
+                  }
+                  return `${params.name}:${toolUtil.commafy(params.value, 2)}(${
+                    params.percent
+                  }%)`;
+                },
+              },
+            },
+            data: [],
+          },
+        ],
+      };
 
-            const { data } = opts;
-            if (data && data.length > 0) {
-                if (!opts.rewriteOption) {
-                    optionPie.series[0].data = [];
-                    const result = [];
-                    const legendData = [];
+      const { data } = opts;
+      if (data && data.length > 0) {
+        if (!opts.rewriteOption) {
+          optionPie.series[0].data = [];
+          const result = [];
+          const legendData = [];
 
-                    data.forEach((item, i) => {
-                        let select = false;
+          data.forEach((item, i) => {
+            let select = false;
 
-                        if (i === 0) {
-                            select = true;
-                        }
-
-                        result.push({
-                            value: item[opts.valueName],
-                            name: item[opts.keyName],
-                            selected: select,
-                            itemStyle: {
-                                normal: {
-                                    color: opts.colorList[i],
-                                },
-                            },
-                        });
-                        legendData.push({ name: item[opts.keyName] });
-                    });
-
-                    optionPie.legend.data = legendData;
-                    optionPie.series[0].data = result;
-                    optionPie.series[0].name = opts.name;
-                }
-            } else {
-                optionPie.series = [];
+            if (i === 0) {
+              select = true;
             }
 
-            toolUtil.extend(optionPie, opts.optionPie);
-            pieChart.setOption(optionPie, true);
-        },
+            result.push({
+              value: item[opts.valueName],
+              name: item[opts.keyName],
+              selected: select,
+              itemStyle: {
+                normal: {
+                  color: opts.colorList[i],
+                },
+              },
+            });
+            legendData.push({ name: item[opts.keyName] });
+          });
+
+          optionPie.legend.data = legendData;
+          optionPie.series[0].data = result;
+          optionPie.series[0].name = opts.name;
+        }
+      } else {
+        optionPie.series = [];
+      }
+
+      toolUtil.extend(optionPie, opts.optionPie);
+      pieChart.setOption(optionPie, true);
     },
+  },
 });
 </script>

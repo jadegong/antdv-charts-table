@@ -10,12 +10,12 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import * as echarts from 'echarts'
-import { toolUtil } from '../../../utils/toolUtils'
+import * as echarts from 'echarts';
+import { toolUtil } from '../../../utils/toolUtils';
 // import constants from '@/utils/constants';
-import { defaultConfig } from '../defaultConfig'
-import { dark } from '../theme/dark'
-import { light } from '../theme/light'
+import { defaultConfig } from '../defaultConfig';
+import { dark } from '../theme/dark';
+import { light } from '../theme/light';
 
 let barChart = null;
 
@@ -31,7 +31,7 @@ export default defineComponent({
     return {
       flagClickEvent: false,
       defaultOption: toolUtil.extend({}, defaultConfig.bar.option),
-    }
+    };
   },
   created() {},
   mounted() {
@@ -39,29 +39,29 @@ export default defineComponent({
       barChart = echarts.init(
         this.$refs.domChart,
         this.option.theme === 'dark' ? dark : light
-      )
-      this.setBarOption(this.option)
-      window.addEventListener('resize', this.onWindowResize)
+      );
+      this.setBarOption(this.option);
+      window.addEventListener('resize', this.onWindowResize);
     }
   },
   updated() {
-    this.setBarOption(this.option)
-    barChart.resize()
+    this.setBarOption(this.option);
+    barChart.resize();
   },
   beforeUnmount() {
     if (barChart) {
-      barChart.clear()
-      barChart.dispose()
+      barChart.clear();
+      barChart.dispose();
     }
-    window.removeEventListener('resize', this.onWindowResize)
+    window.removeEventListener('resize', this.onWindowResize);
   },
   methods: {
     onWindowResize() {
-      barChart.resize()
+      barChart.resize();
     },
     setBarOption(option) {
-      const self = this
-      const opts = toolUtil.merge(this.defaultOption, option, true)
+      const self = this;
+      const opts = toolUtil.merge(this.defaultOption, option, true);
 
       const barOptionV = {
         tooltip: {
@@ -71,13 +71,20 @@ export default defineComponent({
           },
           formatter(params, ticket, callback) {
             if (option.toolTipFormatter) {
-              return eval(option.toolTipFormatter).call(this, params, ticket, callback)
+              return eval(option.toolTipFormatter).call(
+                this,
+                params,
+                ticket,
+                callback
+              );
             }
-            let res = params[0].name
+            let res = params[0].name;
             for (let i = 0, l = params.length; i < l; i++) {
-              res += `<br/>${params[i].seriesName} : ${toolUtil.commafy(params[i].value)}`
+              res += `<br/>${params[i].seriesName} : ${toolUtil.commafy(
+                params[i].value
+              )}`;
             }
-            return res
+            return res;
           },
         },
         title: {
@@ -99,9 +106,9 @@ export default defineComponent({
           itemGap: 10,
           formatter(params) {
             if (opts.legendFormatter) {
-              return eval(opts.legendFormatter).call(this, params)
+              return eval(opts.legendFormatter).call(this, params);
             }
-            return toolUtil.formatCharts(params, 22)
+            return toolUtil.formatCharts(params, 22);
           },
           pageIconInactiveColor: '#2f4554',
           pageIconColor: '#aaa',
@@ -130,9 +137,9 @@ export default defineComponent({
               rotate: opts.xRotate,
               formatter(value, index) {
                 if (option.xAxisFormatter) {
-                  return eval(option.xAxisFormatter).call(this, value, index)
+                  return eval(option.xAxisFormatter).call(this, value, index);
                 }
-                return toolUtil.commafy(value)
+                return toolUtil.commafy(value);
               },
               textStyle: {
                 // color: opts.xAxisLabelColor,
@@ -158,9 +165,9 @@ export default defineComponent({
               rotate: opts.yRotate,
               formatter(value, index) {
                 if (option.yAxisFormatter) {
-                  return eval(option.yAxisFormatter).call(this, value, index)
+                  return eval(option.yAxisFormatter).call(this, value, index);
                 }
-                return toolUtil.formatCharts(value, 18)
+                return toolUtil.formatCharts(value, 18);
               },
               textStyle: {
                 fontSize: 12,
@@ -189,9 +196,9 @@ export default defineComponent({
                 position: 'right',
                 formatter(param) {
                   if (option.labelFormatter) {
-                    return eval(option.labelFormatter).call(this, param)
+                    return eval(option.labelFormatter).call(this, param);
                   }
-                  return toolUtil.commafy(param.value)
+                  return toolUtil.commafy(param.value);
                 },
                 textStyle: {
                   fontSize: 12,
@@ -202,7 +209,7 @@ export default defineComponent({
             data: [],
           },
         ],
-      }
+      };
       const barOptionH = {
         tooltip: {
           show: true,
@@ -212,13 +219,20 @@ export default defineComponent({
           },
           formatter: (params, ticket, callback) => {
             if (option.toolTipFormatter) {
-              return eval(option.toolTipFormatter).call(this, params, ticket, callback)
+              return eval(option.toolTipFormatter).call(
+                this,
+                params,
+                ticket,
+                callback
+              );
             }
-            let res = params[0].name
+            let res = params[0].name;
             for (let i = 0, l = params.length; i < l; i++) {
-              res += `<br/>${params[i].seriesName} : ${toolUtil.commafy(params[i].value)}`
+              res += `<br/>${params[i].seriesName} : ${toolUtil.commafy(
+                params[i].value
+              )}`;
             }
-            return res
+            return res;
           },
         },
         title: {
@@ -241,9 +255,9 @@ export default defineComponent({
           itemGap: 10,
           formatter(params) {
             if (opts.legendFormatter) {
-              return eval(opts.legendFormatter).call(this, params)
+              return eval(opts.legendFormatter).call(this, params);
             }
-            return toolUtil.formatCharts(params, 22)
+            return toolUtil.formatCharts(params, 22);
           },
           // pageIconInactiveColor: '#2f4554',
           // pageIconColor: '#aaa',
@@ -272,9 +286,9 @@ export default defineComponent({
               rotate: opts.xRotate,
               formatter(value, index) {
                 if (option.xAxisFormatter) {
-                  return eval(option.xAxisFormatter).call(this, value, index)
+                  return eval(option.xAxisFormatter).call(this, value, index);
                 }
-                return toolUtil.formatCharts(value, 12)
+                return toolUtil.formatCharts(value, 12);
               },
               textStyle: {
                 // color: opts.xAxisLabelColor,
@@ -301,9 +315,9 @@ export default defineComponent({
               rotate: opts.yRotate,
               formatter(value, index) {
                 if (option.yAxisFormatter) {
-                  return eval(option.yAxisFormatter).call(this, value, index)
+                  return eval(option.yAxisFormatter).call(this, value, index);
                 }
-                return toolUtil.commafy(value)
+                return toolUtil.commafy(value);
               },
               textStyle: {
                 // color: opts.yAxisLabelColor,
@@ -330,9 +344,9 @@ export default defineComponent({
                 position: 'top',
                 formatter(param) {
                   if (option.labelFormatter) {
-                    return eval(option.labelFormatter).call(this, param)
+                    return eval(option.labelFormatter).call(this, param);
                   }
-                  return toolUtil.commafy(param.value)
+                  return toolUtil.commafy(param.value);
                 },
                 textStyle: {
                   fontSize: 12,
@@ -348,77 +362,78 @@ export default defineComponent({
             data: [],
           },
         ],
-      }
+      };
 
       const barOption =
         opts.barType === 'vertical'
           ? toolUtil.extend({}, barOptionV, opts.optionBar)
-          : toolUtil.extend({}, barOptionH, opts.optionBar)
+          : toolUtil.extend({}, barOptionH, opts.optionBar);
 
-      const { data } = opts
+      const { data } = opts;
 
       if (data && data.length > 0) {
-        barOption.yAxis[0].data = []
-        barOption.xAxis[0].data = []
-        barOption.series[0].data = []
+        barOption.yAxis[0].data = [];
+        barOption.xAxis[0].data = [];
+        barOption.series[0].data = [];
         if (opts.resetOrder) {
           data.sort((a, b) => {
-            return a[opts.keyName] - b[opts.keyName]
-          })
+            return a[opts.keyName] - b[opts.keyName];
+          });
         }
 
-        const valueNames = opts.valueName
+        const valueNames = opts.valueName;
         if (valueNames.length > 1) {
           valueNames.forEach((item, index) => {
-            barOption.series[index] = toolUtil.extend({}, barOption.series[0])
-            barOption.series[index].data = []
+            barOption.series[index] = toolUtil.extend({}, barOption.series[0]);
+            barOption.series[index].data = [];
             if (opts.name.length > 1 && opts.name[index]) {
-              barOption.series[index].name = opts.name[index]
+              barOption.series[index].name = opts.name[index];
             }
-          })
+          });
         }
 
         opts.name.forEach((item, index) => {
           barOption.legend.data.push({
             name: opts.name[index],
             icon: 'circle',
-          })
+          });
           // barOption.legend.selected[opts.name[index]] = false
-        })
+        });
 
         if (barOption.yAxis.length > 1) {
           barOption.yAxis.forEach((item, index) => {
-            barOption.series[index].yAxisIndex = index
-          })
+            barOption.series[index].yAxisIndex = index;
+          });
         }
         data.forEach((item, indexA) => {
-          const key = item[opts.keyName]
+          const key = item[opts.keyName];
           if (opts.barType === 'vertical') {
-            barOption.yAxis[0].data.push(key)
+            barOption.yAxis[0].data.push(key);
           } else {
-            barOption.xAxis[0].data.push(key)
+            barOption.xAxis[0].data.push(key);
           }
           if (valueNames.length > 1) {
             // 多类别柱图
             barOption.series.forEach((itemB, indexB) => {
-              barOption.series[indexB].data.push(
-                item[valueNames[indexB]]
-              )
-            })
+              barOption.series[indexB].data.push(item[valueNames[indexB]]);
+            });
           } else if (opts.lastDotted) {
             if (indexA === data.length - 1) {
               barOption.series[0].data.push({
                 value: item[valueNames[0]],
                 itemStyle: {
                   normal: {
-                    borderColor: opts.colorList.length > 1 ? opts.colorList[indexA] : opts.colorList[0],
+                    borderColor:
+                      opts.colorList.length > 1
+                        ? opts.colorList[indexA]
+                        : opts.colorList[0],
                     borderType: 'dotted',
                     borderWidth: '3',
                     color: 'rgba(0,0,0,0.07)',
                   },
                 },
                 originalData: item,
-              })
+              });
             } else {
               barOption.series[0].data.push({
                 value: item[valueNames[0]],
@@ -431,7 +446,7 @@ export default defineComponent({
                       }
                     : {},
                 originalData: item,
-              })
+              });
             }
           } else {
             barOption.series[0].data.push({
@@ -446,37 +461,38 @@ export default defineComponent({
                     }
                   : {},
               originalData: item,
-            })
+            });
           }
-        })
+        });
         // 堆积图
         barOption.series.forEach((item) => {
           if (opts.overlap) {
-            item.stack = '总量'
+            item.stack = '总量';
           }
           if (!opts.label) {
-            item.label.normal.show = false
+            item.label.normal.show = false;
           }
-        })
+        });
 
         if (opts.name.length > 1) {
           barOption.series.forEach((item, index) => {
-            barOption.series[index].name = opts.name[index]
-          })
+            barOption.series[index].name = opts.name[index];
+          });
         } else {
-          barOption.series[0].name = opts.name[0]
+          barOption.series[0].name = opts.name[0];
         }
         // 多类别柱图:每个类别柱图颜色设置
         if (opts.barColor.length > 1) {
           barOption.series.forEach((item, index) => {
-            barOption.series[index].itemStyle.normal.color = opts.barColor[index]
-          })
+            barOption.series[index].itemStyle.normal.color =
+              opts.barColor[index];
+          });
         } else {
           // eslint-disable-next-line prefer-destructuring
-          barOption.series[0].itemStyle.normal.color = opts.barColor[0]
+          barOption.series[0].itemStyle.normal.color = opts.barColor[0];
         }
 
-        self.showLabel = barOption.series[0].label.normal.show
+        self.showLabel = barOption.series[0].label.normal.show;
 
         // 设置默认展示的legend
         if (
@@ -484,25 +500,25 @@ export default defineComponent({
           opts.defaultLegend.length > 0
         ) {
           opts.defaultLegend.forEach((item) => {
-            barOption.legend.selected[item] = true
-          })
+            barOption.legend.selected[item] = true;
+          });
         } else {
           for (const key in barOption.legend.selected) {
-            barOption.legend.selected[key] = true
+            barOption.legend.selected[key] = true;
           }
         }
       } else {
-        barOption.xAxis[0].show = false
-        barOption.yAxis[0].show = false
-        barOption.series = []
+        barOption.xAxis[0].show = false;
+        barOption.yAxis[0].show = false;
+        barOption.series = [];
       }
 
       if (!this.flagClickEvent && opts.clickEvent) {
-        this.flagClickEvent = true
-        barChart.on('click', opts.clickEvent)
+        this.flagClickEvent = true;
+        barChart.on('click', opts.clickEvent);
       }
-      toolUtil.extend(barOption, opts.barOption)
-      barChart.setOption(barOption, true)
+      toolUtil.extend(barOption, opts.barOption);
+      barChart.setOption(barOption, true);
     },
   },
 });

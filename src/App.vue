@@ -48,7 +48,7 @@
         <a-breadcrumb style="margin: 16px 0">
           <a-breadcrumb-item v-for="matchedRoute in currentMatchedRoutes" :key="matchedRoute.name">{{ matchedRoute.meta.title }}</a-breadcrumb-item>
         </a-breadcrumb>
-        <div class="page-content-container" :style="{ background: '#fff', padding: '24px', minHeight: '280px' }">
+        <div class="page-content-container">
           <router-view></router-view>
         </div>
       </div>
