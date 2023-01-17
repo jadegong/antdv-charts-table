@@ -2,10 +2,13 @@
 <!--        2022/04/25 gqd 加载中; -->
 <!--        2022/08/17 gqd 增加table部分逻辑; -->
 <!--        2023/01/16 gqd 修改为typescript; -->
+<!--        2023/01/17 gqd Fix height bug; -->
 <template>
   <a-spin :spinning="option.loading || false">
-    <div class="table-chart-wrapper" :style="{ height: `${baseChartOption.height}px` }">
-      <no-data v-if="baseChartOption.data && baseChartOption.data.length === 0" :data="baseChartOption.data"></no-data>
+    <div class="table-chart-wrapper">
+      <div v-if="baseChartOption.data && baseChartOption.data.length === 0" :style="{ position: 'relative', height: `${baseChartOption.height}px` }">
+        <no-data :data="baseChartOption.data"></no-data>
+      </div>
       <div v-else class="table-chart-container">
         <div v-if="config[1].length > 0" class="table-chart-operator-wrapper">
           <span
@@ -20,8 +23,8 @@
             <export-outlined v-if="iconItem.id === 'export'" />
           </span>
         </div>
-        <div ref="tableRef" class="table-chart-content-container" :style="{ 'height': config[1].length > 0 ? `calc(100% - 25px)` : '100%'}">
-          <vue-chart v-if="showType === 'chart' || showType === 'export'" :type="baseChartOption.type" :option="{...baseChartOption}"></vue-chart>
+        <div ref="tableRef" class="table-chart-content-container">
+          <vue-chart v-if="showType === 'chart' || showType === 'export'" :type="baseChartOption.type" :option="{...baseChartOption}" :style="{ 'height': `${baseChartOption.height - 25}px` }"></vue-chart>
           <base-table v-else-if="showType === 'table'" :option="baseTableOption" />
         </div>
       </div>
