@@ -1,11 +1,13 @@
 <!-- v1.0.0 2022/08/09 gqd 折线图组件; -->
 <!--        2022/08/16 gqd 使用普通变量接收echarts实例，否则echarts实例会赋值给ref响应式Proxy对象，导致tooltip不显示; -->
+<!--        2023/01/17 gqd 修改为typescript; -->
 <template>
-    <div ref="domChart" style="height: 100%; width: 100%">
-        <span style="display: none">{{ option.type }}</span>
-    </div>
+  <div ref="domChart" style="height: 100%; width: 100%">
+    <span style="display: none">{{ option.type }}</span>
+  </div>
 </template>
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import * as echarts from 'echarts'
 import { toolUtil } from '../../../utils/toolUtils'
 // import constants from '@/utils/constants';
@@ -16,7 +18,7 @@ import { light } from '../theme/light'
 // 使用普通变量接收echarts实例，否则echarts实例会赋值给ref响应式Proxy对象，导致tooltip不显示。
 let lineChart = null
 
-export default {
+export default defineComponent({
     name: 'LineChart',
     props: {
         option: {
@@ -45,7 +47,7 @@ export default {
         this.setLineOption(this.option)
         lineChart.resize()
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (lineChart) {
             lineChart.clear()
             lineChart.dispose()
@@ -266,5 +268,5 @@ export default {
             lineChart.setOption(optionLine, true)
         },
     },
-}
+});
 </script>

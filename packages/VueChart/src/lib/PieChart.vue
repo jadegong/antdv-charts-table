@@ -1,11 +1,13 @@
 <!-- v1.0.0 2022/03/18 gqd 饼图组件; -->
 <!--        2022/08/16 gqd 使用普通变量接收echarts实例，否则echarts实例会赋值给ref响应式Proxy对象，导致tooltip不显示; -->
+<!--        2023/01/16 gqd 修改为typescript; -->
 <template>
-    <div ref="domChart" style="height: 100%; width: 100%;">
-        <span style="display: none;">{{option.type}}</span>
-    </div>
+  <div ref="domChart" style="height: 100%; width: 100%;">
+    <span style="display: none;">{{option.type}}</span>
+  </div>
 </template>
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import * as echarts from 'echarts';
 import { toolUtil } from '../../../utils/toolUtils';
 // import constants from '@/utils/constants';
@@ -15,7 +17,7 @@ import { light } from '../theme/light';
 
 let pieChart = null;
 
-export default {
+export default defineComponent({
     name: 'PieChart',
     props: {
         option: {
@@ -40,7 +42,7 @@ export default {
         this.setPieOption(this.option);
         pieChart.resize();
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (pieChart) {
             pieChart.clear();
             pieChart.dispose();
@@ -171,5 +173,5 @@ export default {
             pieChart.setOption(optionPie, true);
         },
     },
-}
+});
 </script>

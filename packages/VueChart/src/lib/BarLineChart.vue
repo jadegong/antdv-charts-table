@@ -4,12 +4,14 @@
 <!--        2022/03/31 gqd 增加xy轴标签格式化的参数index; -->
 <!--        2022/04/25 gqd 数据刷新时是组件可调用updated函数; -->
 <!--        2022/08/16 gqd 使用普通变量接收echarts实例，否则echarts实例会赋值给ref响应式Proxy对象，导致tooltip不显示; -->
+<!--        2023/01/16 gqd 修改为typescript; -->
 <template>
-    <div ref="domChart" style="height: 100%; width: 100%;">
-        <span style="display: none;">{{option.type}}</span>
-    </div>
+  <div ref="domChart" style="height: 100%; width: 100%;">
+    <span style="display: none;">{{option.type}}</span>
+  </div>
 </template>
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import * as echarts from 'echarts';
 import { toolUtil } from '../../../utils/toolUtils';
 // import constants from '@/utils/constants';
@@ -21,7 +23,7 @@ import minPointImg from '../img/min-point.png';
 
 let barLineChart = null;
 
-export default {
+export default defineComponent({
     name: 'BarLineChart',
     props: {
         option: {
@@ -47,7 +49,7 @@ export default {
         this.setBarLineOption(this.option);
         barLineChart.resize();
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (barLineChart) {
             barLineChart.clear();
             barLineChart.dispose();
@@ -406,9 +408,9 @@ export default {
               });
 
               if (opts.splitYAxis) {
-                let temp = [];
-                let temp1 = [];
-                let temp2 = [];
+                // let temp = [];
+                // let temp1 = [];
+                // let temp2 = [];
                   // v1.0.0 2022/01/19 gqd 改变最大最小值的获取方式
                   let min1, min2, max1, max2;
                   barLineOption.series.forEach((singleSeries, singleSeriesIndex) => {
@@ -471,5 +473,5 @@ export default {
             barLineChart.setOption(barLineOption, true);
         },
     },
-}
+});
 </script>
