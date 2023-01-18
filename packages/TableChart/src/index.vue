@@ -3,6 +3,7 @@
 <!--        2022/08/17 gqd 增加table部分逻辑; -->
 <!--        2023/01/16 gqd 修改为typescript; -->
 <!--        2023/01/17 gqd Fix height bug; -->
+<!--        2023/01/18 gqd No pagination; -->
 <template>
   <a-spin :spinning="option.loading || false">
     <div class="table-chart-wrapper">
@@ -157,7 +158,7 @@ export default defineComponent({
         showHeader: true,
         columns,
         dataSource: tableData || data || [],
-        pagination: true,
+        pagination: false,
         scroll: {
           x: scrollX,
           y: tableHeight || height - this.tableHeaderHeight - 10
