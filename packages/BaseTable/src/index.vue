@@ -51,7 +51,7 @@ export default defineComponent({
     defaultOptions() {
       const retOpt = {
         size: 'middle',
-        pagination: true,
+        pagination: false,
       };
       toolUtil.merge(retOpt, this.option, true);
       if (retOpt.dataSource?.length > 0) {

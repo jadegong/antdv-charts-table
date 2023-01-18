@@ -1,4 +1,5 @@
 <!-- v1.0.0 2023/01/17 gqd BarLine chart table demo; -->
+<!--        2023/01/18 gqd Add 2022 year statistics; -->
 <template>
   <div>
     <div style="width: 60%; margin: 0 auto">
@@ -97,6 +98,13 @@ export default defineComponent({
         birthRate: 7.52,
         deathRate: 7.18,
       },
+      {
+        year: 2022,
+        birthNum: 9560000,
+        deathNum: 10410000,
+        birthRate: 6.77,
+        deathRate: 7.37,
+      },
     ];
     // 柱状折线图demo配置
     const barLineColumns = [
@@ -132,6 +140,11 @@ export default defineComponent({
         dataIndex: 'deathRate',
         customRender: ({ text }) => `${text}‰`,
       },
+      {
+        title: '人口增长率',
+        dataIndex: '',
+        customRender: ({ record }) => `${(record.birthRate - record.deathRate).toFixed(2)}‰`,
+      },
     ];
     return {
       sourceCode: '',
@@ -148,6 +161,15 @@ export default defineComponent({
         lineName: ['出生率', '死亡率'],
         lineColor: ['#f6ca3f', '#ff7f4c'],
         xRotate: 45,
+        toolTipFormatter: (params) => {
+          let res = `年份：${params[0].name}`;
+          res += `<br/>${params[0].seriesName} : ${toolUtil.commafy(params[0].value)}`;
+          res += `<br/>${params[1].seriesName} : ${toolUtil.commafy(params[1].value)}`;
+          res += `<br/>${params[2].seriesName} : ${params[2].value}‰`;
+          res += `<br/>${params[3].seriesName} : ${params[3].value}‰`;
+          res += `<br/>人口增长率 : ${(params[2].value - params[3].value).toFixed(2)}‰`;
+          return res;
+        },
         y1AxisName: '数量',
         y2AxisName: '比率(‰)',
         hideMarkPoint: true,
