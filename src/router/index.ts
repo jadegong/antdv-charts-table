@@ -1,3 +1,6 @@
+/**
+ * v1.0.0 2023/01/18 gqd Finish basic echarts table component router config;
+ */
 import HomeView from '../views/HomeView.vue';
 import DemoContainer from '../layouts/index.vue';
 
@@ -32,18 +35,18 @@ const routes = [
         component: () => import('../views/LinesChart/index.vue'),
         meta: { title: '多折线图' },
       },
-        {
-            path: '/simpleCharts/pie',
-            name: 'simpleChartsPie',
-            component: () => import('../views/PieChart/index.vue'),
-            meta: { title: '饼图' },
-        },
-        {
-            path: '/simpleCharts/radar',
-            name: 'simpleChartsRadar',
-            component: () => import('../views/RadarChart/index.vue'),
-            meta: { title: '雷达图' },
-        },
+      {
+        path: '/simpleCharts/pie',
+        name: 'simpleChartsPie',
+        component: () => import('../views/PieChart/index.vue'),
+        meta: { title: '饼图' },
+      },
+      {
+        path: '/simpleCharts/radar',
+        name: 'simpleChartsRadar',
+        component: () => import('../views/RadarChart/index.vue'),
+        meta: { title: '雷达图' },
+      },
     ],
   },
   {

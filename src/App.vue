@@ -13,7 +13,7 @@
         mode="horizontal"
         :style="{ lineHeight: '64px' }"
       >
-        <a-menu-item key="antdvChartsTable">常用业务组件</a-menu-item>
+        <a-menu-item key="antdvChartsTable">常用图表切换组件</a-menu-item>
       </a-menu>
     </a-layout-header>
     <a-layout style="padding: 0 4px;">
