@@ -15,6 +15,22 @@ npm i -S antdv-charts-table
 ```
 
 ### Useage
+**src/main.ts**
+```typescript
+import { createApp } from 'vue'
+import App from './App.vue'
+import Antd from 'ant-design-vue'
+import AntdvChartsTable from 'antdv-charts-table'
+import 'ant-design-vue/dist/antd.css'
+import 'antdv-charts-table/dist/style.css'
+
+const app = createApp(App)
+app.use(Antd)
+app.use(AntdvChartsTable)
+
+app.mount('#app')
+```
+
 **For type bar demo**
 ```vue
 <template>
