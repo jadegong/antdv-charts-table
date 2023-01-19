@@ -1,3 +1,5 @@
+<!-- v1.0.0 2023/01/17 gqd Line chart table demo; -->
+<!--        2023/01/19 gqd Add markdown doc; -->
 <template>
   <div>
     <div style="width: 60%; margin: 0 auto;">
@@ -6,6 +8,7 @@
         :sourceCode="sourceCode"
       >
       </code-preview>
+      <read-me-doc />
     </div>
   </div>
 </template>
@@ -14,11 +17,13 @@ import { defineComponent } from 'vue';
 
 import { toolUtil } from '../../utils/toolUtils';
 import CodePreview from '../../components/CodePreview.vue';
+import ReadMeDoc from './LineChart.md';
 
 export default defineComponent({
   name: 'LineChartPage',
   components: {
-    CodePreview
+    CodePreview,
+    ReadMeDoc
   },
   data() {
     const lineData = [

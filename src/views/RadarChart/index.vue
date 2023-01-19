@@ -1,9 +1,11 @@
 <!-- v1.0.0 2023/01/18 gqd Add RadarChart demo page; -->
+<!--        2023/01/19 gqd Add markdown doc; -->
 <template>
   <div>
     <div style="width: 60%; margin: 0 auto">
       <act-table-chart :option="radarChartOptions"></act-table-chart>
       <code-preview :sourceCode="sourceCode"> </code-preview>
+      <read-me-doc />
     </div>
   </div>
 </template>
@@ -11,11 +13,13 @@
 import { defineComponent } from 'vue';
 
 import CodePreview from '../../components/CodePreview.vue';
+import ReadMeDoc from './RadarChart.md';
 
 export default defineComponent({
   name: 'RadarChartPage',
   components: {
     CodePreview,
+    ReadMeDoc
   },
   data() {
     const radarData = [

@@ -1,0 +1,24 @@
+export declare const theme: {
+    'dark-blue1': string;
+    'dark-blue2': string;
+    'dark-blue4': string;
+    'dark-blue5': string;
+    'dark-blue6': string;
+    'dark-blue7': string;
+    'dark-blue8': string;
+    'dark-blue9': string;
+    'dark-blue10': string;
+    'dark-blue11': string;
+    'dark-blue12': string;
+    'dark-blue13': string;
+    'dark-blue14': string;
+    'dark-gray1': string;
+    'dark-gray2': string;
+    'dark-gray3': string;
+    'dark-gray4': string;
+    'dark-white': string;
+    'media-tag': string;
+    'chart-label': string;
+    'chart-axisLine': string;
+    'chart-splitLine': string;
+};

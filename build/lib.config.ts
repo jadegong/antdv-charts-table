@@ -15,8 +15,8 @@ export default defineConfig({
     outDir: 'dist',
     lib: {
       entry: resolve(__dirname, '../packages/index.ts'),
-      name: 'AntdvBusinessCommon',
-      fileName: (format) => `antdv-business-common.${format}.js`,
+      name: 'AntdvChartsTable',
+      fileName: (format) => `antdv-charts-table.${format}.js`,
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖

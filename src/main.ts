@@ -8,6 +8,8 @@ import AntdvChartsTable from '../packages';
 
 import 'ant-design-vue/dist/antd.css';
 
+import 'github-markdown-css/github-markdown-light.css';
+
 const app = createApp(App)
 
 // 创建路由实例，并传递配置

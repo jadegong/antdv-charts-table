@@ -1,9 +1,11 @@
 <!-- v1.0.0 2023/01/18 gqd Add PieChart demo page; -->
+<!--        2023/01/19 gqd Add markdown doc; -->
 <template>
   <div>
     <div style="width: 60%; margin: 0 auto">
       <act-table-chart :option="pieChartOptions"></act-table-chart>
       <code-preview :sourceCode="sourceCode"> </code-preview>
+      <read-me-doc />
     </div>
   </div>
 </template>
@@ -13,11 +15,13 @@ import Mock from 'mockjs';
 
 import { toolUtil } from '../../utils/toolUtils';
 import CodePreview from '../../components/CodePreview.vue';
+import ReadMeDoc from './PieChart.md';
 
 export default defineComponent({
   name: 'PieChartPage',
   components: {
     CodePreview,
+    ReadMeDoc
   },
   data() {
     const pieData = Mock.mock({
