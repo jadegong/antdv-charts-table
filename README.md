@@ -125,4 +125,4 @@ For type bar and switch to table
 ![](https://raw.githubusercontent.com/jadegong/antdv-charts-table/master/Screenshot_act_bardemo_table_2023-01-19_12-22-31.png)
 
 ### Configuration docs
-To be done.
+[act.jadegong.cn](http://act.jadegong.cn)
