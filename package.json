@@ -1,6 +1,6 @@
 {
   "name": "antdv-charts-table",
-  "version": "0.0.2-alpha",
+  "version": "0.0.3-alpha",
   "description": "Echarts table change components for antdv",
   "author": "jadegong<jadegong@sina.cn>",
   "repository": {

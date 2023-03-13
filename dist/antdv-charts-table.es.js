@@ -67734,7 +67734,7 @@ const _sfc_main$8 = defineComponent({
           opts.overlap && (C.stack = "总量"), opts.label || (C.label.normal.show = !1);
         }), opts.name.length > 1 ? barOption.series.forEach((C, G) => {
           barOption.series[G].name = opts.name[G];
-        }) : barOption.series[0].name = opts.name[0], opts.barColor.length > 1 ? barOption.series.forEach((C, G) => {
+        }) : barOption.series[0].name = opts.name[0], opts.name.length > 1 ? barOption.series.forEach((C, G) => {
           barOption.series[G].itemStyle.normal.color = opts.barColor[G];
         }) : barOption.series[0].itemStyle.normal.color = opts.barColor[0], self.showLabel = barOption.series[0].label.normal.show, opts.defaultLegend instanceof Array && opts.defaultLegend.length > 0)
           opts.defaultLegend.forEach((C) => {
@@ -68172,18 +68172,13 @@ const _sfc_main$6 = defineComponent({
           });
         else {
           let U;
-          G.length > 1 ? U = G.length : U = 1, barLineOption.series[U] = toolUtil.extend(
-            {},
-            barLineOption.seriesLine
-          ), barLineOption.series[U].name = opts.lineName[0];
+          G.length > 1 ? U = G.length : U = 1, barLineOption.series[U] = toolUtil.extend({}, barLineOption.seriesLine), barLineOption.series[U].name = opts.lineName[0];
         }
-        if (opts.barColor.length > 1 ? opts.barColor.forEach((U, K) => {
-          barLineOption.series[K].itemStyle.normal.color = opts.barColor[K];
-        }) : barLineOption.series[0].itemStyle.normal.color = opts.barColor[0], opts.lineColor.length > 1 ? opts.barColor.length > 1 ? opts.barColor.forEach((U, K) => {
-          barLineOption.series[opts.barColor.length + K].lineStyle.normal.color = opts.lineColor[K], barLineOption.series[opts.barColor.length + K].itemStyle.normal.color = opts.lineColor[K];
-        }) : opts.lineColor.forEach((U, K) => {
-          barLineOption.series[K + 1].lineStyle.normal.color = opts.lineColor[K], barLineOption.series[K + 1].itemStyle.normal.color = opts.lineColor[K];
-        }) : opts.barColor.length > 1 ? (barLineOption.series[opts.barColor.length].lineStyle.normal.color = opts.lineColor[0], barLineOption.series[opts.barColor.length].itemStyle.normal.color = opts.lineColor[0]) : (barLineOption.series[1].lineStyle.normal.color = opts.lineColor[0], barLineOption.series[1].itemStyle.normal.color = opts.lineColor[0]), data.forEach((U) => {
+        if (opts.barName.length >= 1 && opts.barName.forEach((U, K) => {
+          barLineOption.series[K].itemStyle.normal.color = opts.barColor[K % opts.barColor.length];
+        }), opts.lineName.length >= 1 && opts.lineName.forEach((U, K) => {
+          barLineOption.series[opts.barName.length + K].itemStyle.normal.color = opts.lineColor[K % opts.lineColor.length];
+        }), data.forEach((U) => {
           const K = U[H];
           G.length > 1 ? G.forEach((W, Z) => {
             barLineOption.series[Z].data.push(U[G[Z]]);
