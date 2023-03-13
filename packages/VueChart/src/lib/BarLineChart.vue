@@ -5,6 +5,7 @@
 <!--        2022/04/25 gqd 数据刷新时是组件可调用updated函数; -->
 <!--        2022/08/16 gqd 使用普通变量接收echarts实例，否则echarts实例会赋值给ref响应式Proxy对象，导致tooltip不显示; -->
 <!--        2023/01/16 gqd 修改为typescript; -->
+<!--        2023/03/14 gqd 修复柱状图和折线图颜色分配问题; -->
 <template>
   <div ref="domChart" style="height: 100%; width: 100%">
     <span style="display: none">{{ option.type }}</span>
@@ -368,62 +369,34 @@ export default defineComponent({
             barLineOption.series[lineIndex].name = opts.lineName[index];
           });
         } else {
-          let lineIndex;
+          let lineIndex: number;
           if (barName.length > 1) {
             lineIndex = barName.length;
           } else {
             lineIndex = 1;
           }
-          barLineOption.series[lineIndex] = toolUtil.extend(
-            {},
-            barLineOption.seriesLine
-          );
+          barLineOption.series[lineIndex] = toolUtil.extend({}, barLineOption.seriesLine);
           barLineOption.series[lineIndex].name = opts.lineName[0];
         }
 
         // 柱图颜色
-        if (opts.barColor.length > 1) {
-          opts.barColor.forEach((item, index) => {
-            barLineOption.series[index].itemStyle.normal.color =
-              opts.barColor[index];
-          });
-        } else {
-          barLineOption.series[0].itemStyle.normal.color = opts.barColor[0];
+        if (opts.barName.length >= 1) {
+          opts.barName.forEach((item: any, index: number) => {
+            barLineOption.series[index].itemStyle.normal.color = opts.barColor[index % opts.barColor.length]
+          })
         }
         // 线图颜色
-        if (opts.lineColor.length > 1) {
-          if (opts.barColor.length > 1) {
-            opts.barColor.forEach((item, index) => {
-              barLineOption.series[
-                opts.barColor.length + index
-              ].lineStyle.normal.color = opts.lineColor[index];
-              barLineOption.series[
-                opts.barColor.length + index
-              ].itemStyle.normal.color = opts.lineColor[index];
-            });
-          } else {
-            opts.lineColor.forEach((item, index) => {
-              barLineOption.series[index + 1].lineStyle.normal.color =
-                opts.lineColor[index];
-              barLineOption.series[index + 1].itemStyle.normal.color =
-                opts.lineColor[index];
-            });
-          }
-        } else if (opts.barColor.length > 1) {
-          barLineOption.series[opts.barColor.length].lineStyle.normal.color =
-            opts.lineColor[0];
-          barLineOption.series[opts.barColor.length].itemStyle.normal.color =
-            opts.lineColor[0];
-        } else {
-          barLineOption.series[1].lineStyle.normal.color = opts.lineColor[0];
-          barLineOption.series[1].itemStyle.normal.color = opts.lineColor[0];
+        if (opts.lineName.length >= 1) {
+          opts.lineName.forEach((item: any, index: number) => {
+            barLineOption.series[opts.barName.length + index].itemStyle.normal.color = opts.lineColor[index % opts.lineColor.length]
+          })
         }
-        data.forEach((item) => {
+        data.forEach((item: any) => {
           const keyValue = item[keyName];
           // const lineValue = item[lineName];
           // 添加柱图数据
           if (barName.length > 1) {
-            barName.forEach((barItem, indexA) => {
+            barName.forEach((barItem: any, indexA: number) => {
               barLineOption.series[indexA].data.push(item[barName[indexA]]);
             });
           } else {
@@ -433,13 +406,13 @@ export default defineComponent({
           // 添加线图数据
           if (lineName.length > 1) {
             if (barName.length > 1) {
-              lineName.forEach((lineItem, indexB) => {
+              lineName.forEach((lineItem: any, indexB: number) => {
                 barLineOption.series[barName.length + indexB].data.push(
                   item[lineName[indexB]]
                 );
               });
             } else {
-              lineName.forEach((lineItem, indexB) => {
+              lineName.forEach((lineItem: any, indexB: number) => {
                 barLineOption.series[indexB + 1].data.push(
                   item[lineName[indexB]]
                 );

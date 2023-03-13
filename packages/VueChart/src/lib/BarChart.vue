@@ -3,6 +3,7 @@
 <!--        2022/04/25 gqd 标签长度溢出时处理，增加containLabel值; -->
 <!--        2022/08/16 gqd 使用普通变量接收echarts实例，否则echarts实例会赋值给ref响应式Proxy对象，导致tooltip不显示; -->
 <!--        2023/01/16 gqd 修改为typescript; -->
+<!--        2023/03/14 gqd 修复柱状图和折线图颜色分配问题; -->
 <template>
   <div ref="domChart" style="height: 100%; width: 100%">
     <span style="display: none">{{ option.type }}</span>
@@ -59,7 +60,7 @@ export default defineComponent({
     onWindowResize() {
       barChart.resize();
     },
-    setBarOption(option) {
+    setBarOption(option: any) {
       const self = this;
       const opts = toolUtil.merge(this.defaultOption, option, true);
 
@@ -69,7 +70,7 @@ export default defineComponent({
           axisPointer: {
             type: 'none',
           },
-          formatter(params, ticket, callback) {
+          formatter(params: any, ticket: any, callback: any) {
             if (option.toolTipFormatter) {
               return eval(option.toolTipFormatter).call(
                 this,
@@ -104,7 +105,7 @@ export default defineComponent({
           itemHeight: 8,
           padding: 10,
           itemGap: 10,
-          formatter(params) {
+          formatter(params: any) {
             if (opts.legendFormatter) {
               return eval(opts.legendFormatter).call(this, params);
             }
@@ -135,7 +136,7 @@ export default defineComponent({
             data: [],
             axisLabel: {
               rotate: opts.xRotate,
-              formatter(value, index) {
+              formatter(value: any, index) {
                 if (option.xAxisFormatter) {
                   return eval(option.xAxisFormatter).call(this, value, index);
                 }
@@ -163,7 +164,7 @@ export default defineComponent({
             axisLabel: {
               interval: 0,
               rotate: opts.yRotate,
-              formatter(value, index) {
+              formatter(value: any, index) {
                 if (option.yAxisFormatter) {
                   return eval(option.yAxisFormatter).call(this, value, index);
                 }
@@ -194,7 +195,7 @@ export default defineComponent({
               normal: {
                 show: true,
                 position: 'right',
-                formatter(param) {
+                formatter(param: any) {
                   if (option.labelFormatter) {
                     return eval(option.labelFormatter).call(this, param);
                   }
@@ -217,7 +218,7 @@ export default defineComponent({
           axisPointer: {
             type: 'none',
           },
-          formatter: (params, ticket, callback) => {
+          formatter: (params: any, ticket: any, callback: any) => {
             if (option.toolTipFormatter) {
               return eval(option.toolTipFormatter).call(
                 this,
@@ -253,7 +254,7 @@ export default defineComponent({
           itemHeight: 8,
           padding: 10,
           itemGap: 10,
-          formatter(params) {
+          formatter(params: any) {
             if (opts.legendFormatter) {
               return eval(opts.legendFormatter).call(this, params);
             }
@@ -284,7 +285,7 @@ export default defineComponent({
             data: [],
             axisLabel: {
               rotate: opts.xRotate,
-              formatter(value, index) {
+              formatter(value: any, index) {
                 if (option.xAxisFormatter) {
                   return eval(option.xAxisFormatter).call(this, value, index);
                 }
@@ -313,7 +314,7 @@ export default defineComponent({
             axisLabel: {
               interval: 0,
               rotate: opts.yRotate,
-              formatter(value, index) {
+              formatter(value: any, index) {
                 if (option.yAxisFormatter) {
                   return eval(option.yAxisFormatter).call(this, value, index);
                 }
@@ -342,7 +343,7 @@ export default defineComponent({
               normal: {
                 show: true,
                 position: 'top',
-                formatter(param) {
+                formatter(param: any) {
                   if (option.labelFormatter) {
                     return eval(option.labelFormatter).call(this, param);
                   }
@@ -383,7 +384,7 @@ export default defineComponent({
 
         const valueNames = opts.valueName;
         if (valueNames.length > 1) {
-          valueNames.forEach((item, index) => {
+          valueNames.forEach((item: any, index: number) => {
             barOption.series[index] = toolUtil.extend({}, barOption.series[0]);
             barOption.series[index].data = [];
             if (opts.name.length > 1 && opts.name[index]) {
@@ -392,7 +393,7 @@ export default defineComponent({
           });
         }
 
-        opts.name.forEach((item, index) => {
+        opts.name.forEach((item: any, index: number) => {
           barOption.legend.data.push({
             name: opts.name[index],
             icon: 'circle',
@@ -401,11 +402,11 @@ export default defineComponent({
         });
 
         if (barOption.yAxis.length > 1) {
-          barOption.yAxis.forEach((item, index) => {
+          barOption.yAxis.forEach((item: any, index: number) => {
             barOption.series[index].yAxisIndex = index;
           });
         }
-        data.forEach((item, indexA) => {
+        data.forEach((item: any, indexA: number) => {
           const key = item[opts.keyName];
           if (opts.barType === 'vertical') {
             barOption.yAxis[0].data.push(key);
@@ -414,7 +415,7 @@ export default defineComponent({
           }
           if (valueNames.length > 1) {
             // 多类别柱图
-            barOption.series.forEach((itemB, indexB) => {
+            barOption.series.forEach((itemB: any, indexB: number) => {
               barOption.series[indexB].data.push(item[valueNames[indexB]]);
             });
           } else if (opts.lastDotted) {
@@ -465,7 +466,7 @@ export default defineComponent({
           }
         });
         // 堆积图
-        barOption.series.forEach((item) => {
+        barOption.series.forEach((item: any) => {
           if (opts.overlap) {
             item.stack = '总量';
           }
@@ -475,18 +476,16 @@ export default defineComponent({
         });
 
         if (opts.name.length > 1) {
-          barOption.series.forEach((item, index) => {
+          barOption.series.forEach((item: any, index: number) => {
             barOption.series[index].name = opts.name[index];
           });
         } else {
           barOption.series[0].name = opts.name[0];
         }
         // 多类别柱图:每个类别柱图颜色设置
-        if (opts.barColor.length > 1) {
-          barOption.series.forEach((item, index) => {
-            barOption.series[index].itemStyle.normal.color =
-              opts.barColor[index];
-          });
+        if (opts.name.length > 1) {
+          barOption.series.forEach((item: any, index: number) => {
+            barOption.series[index].itemStyle.normal.color = opts.barColor[index];});
         } else {
           // eslint-disable-next-line prefer-destructuring
           barOption.series[0].itemStyle.normal.color = opts.barColor[0];
@@ -499,7 +498,7 @@ export default defineComponent({
           opts.defaultLegend instanceof Array &&
           opts.defaultLegend.length > 0
         ) {
-          opts.defaultLegend.forEach((item) => {
+          opts.defaultLegend.forEach((item: any) => {
             barOption.legend.selected[item] = true;
           });
         } else {
