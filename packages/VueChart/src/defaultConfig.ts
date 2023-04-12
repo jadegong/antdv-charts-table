@@ -1,8 +1,6 @@
 /**
  * Created by lijianxiong on 19/4/12.
- * 2021/12/27 gqd Default ReactChart settings moved to ReactChart library, not in pages library;
- * 2022/01/13 gqd Add Line grid options;
- * 2022/01/14 gqd Add pie showTooltip options;
+ * v0.0.4-alpha 2023/04/12 gqd 柱状图饼图联动组件配置;
  */
 import { theme } from '../../theme';
 
@@ -115,6 +113,7 @@ export const defaultConfig = {
             legendFormatter: null,
             xAxisFormatter: null,
             yAxisFormatter: null,
+            smooth: true,
         },
         dataOption: {
             url: '/json/test.json',
@@ -217,6 +216,7 @@ export const defaultConfig = {
             legendFormatter: null,
             xAxisFormatter: null,
             yAxisFormatter: null,
+            smooth: true,
         },
         dataOption: {
             url: '/json/test.json',
@@ -343,7 +343,7 @@ export const defaultConfig = {
         option: {
             theme: 'light',
             type: 'pie',
-            title: '物联卡总体发展趋势',
+            title: '',
             keyName: 'key',
             valueName: 'value',
             orient: 'vertical',
@@ -463,10 +463,190 @@ export const defaultConfig = {
             showY2Axis: true,
             showYAxisName: true,
             splitYAxis: false,
+            smooth: true,
         },
         dataOption: {
             url: '/json/test.json',
             objName: 'barLineChart',
+            method: 'get',
+            data: [],
+            params: {
+                intfcType: 'baseProvince',
+                intfcTypeName: '测试intfcTypeName',
+            },
+        },
+        exportOption: {
+            property: [
+                {
+                    exportName: '{dateName} {tab}',
+                    exportRiskType: '',
+                    exportAddress: 'riskPlatform/exportJson',
+                    exportParams: '',
+                },
+            ],
+            exportPermission: true,
+        },
+        customizeOption: [
+            {
+                index: 1,
+                customizeType: 'upload',
+                customizeIcon: 'download',
+                customizeDisable: '(()=>false)()',
+                buttonConfig: {
+                    url: '',
+                    params: {
+                        searchParam: false,
+                        selectParam: false,
+                        configParam: [
+                            {
+                                key: 'key',
+                                value: 'value',
+                            },
+                        ],
+                    },
+                    fileType: '',
+                    fileSize: '100',
+                },
+            },
+        ],
+        GridX: 0,
+        GridY: 0,
+        w: 24,
+        h: 24,
+    },
+    pieBar: {
+        option: {
+            theme: 'light',
+            type: 'pieBar',
+            keyName: 'key',
+            valueName: ['value', 'value1'],
+            barType: 'horizontal',
+            title: '物联卡总体发展趋势',
+            name: ['用户数', '总用户数'],
+            barColor: ['#60AAFF', '#7687A1'],
+            colorList: ['#60AAFF'],
+            gridLeft: '30%',
+            gridRight: '10%',
+            gridTop: '20%',
+            gridBottom: '20%',
+            legendShow: true,
+            xAxisLabelColor: theme['chart-label'],
+            yAxisLabelColor: theme['chart-label'],
+            orient: 'horizontal',
+            legendLeft: 'center',
+            legendTop: '30px',
+            optionBar: {},
+            pieCenter: ['15%', '50%'],
+            pieRadius: '30%',
+        },
+        dataOption: {
+            url: '/json/test.json',
+            objName: 'barChart',
+            method: 'get',
+            data: [],
+            params: {
+                intfcType: 'baseProvince',
+                intfcTypeName: '测试intfcTypeName',
+            },
+        },
+        exportOption: {
+            property: [
+                {
+                    exportName: '{dateName} {tab}',
+                    exportRiskType: '',
+                    exportAddress: 'riskPlatform/exportJson',
+                    exportParams: '',
+                },
+            ],
+            exportPermission: true,
+        },
+        customizeOption: [
+            {
+                index: 1,
+                customizeType: 'upload',
+                customizeIcon: 'download',
+                customizeDisable: '(()=>false)()',
+                buttonConfig: {
+                    url: '',
+                    params: {
+                        searchParam: false,
+                        selectParam: false,
+                        configParam: [
+                            {
+                                key: 'key',
+                                value: 'value',
+                            },
+                        ],
+                    },
+                    fileType: '',
+                    fileSize: '100',
+                },
+            },
+        ],
+        GridX: 0,
+        GridY: 0,
+        w: 24,
+        h: 24,
+    },
+    pieLines: {
+        option: {
+            theme: 'light',
+            type: 'pieLines',
+            data: [], // 图表数据
+            title: '', // 图表名称
+            name: '多折线图', // 线名称
+            keyName: 'key', // 数据展现坐标KEY名称
+            valueName: 'value', // 数据展现值
+            gridLeft: '30%', // grid 组件离容器左侧的距离
+            gridRight: '10%', // grid 组件离容器右侧的距离
+            gridTop: '20%', // grid 组件离容器上侧的距离
+            gridBottom: '20%', // grid 组件离容器下侧的距离
+            legendShow: true, // 是否显示legend
+            orient: 'horizontal', // 图例布局朝向
+            legendLeft: 'center', // 图例组件离容器左侧的距离
+            legendTop: '30px', // 图例组件离容器上侧的距离
+            xRotate: 0, // x轴标签旋转角度
+            xAxisLabelColor: theme['chart-label'], // x轴标签颜色
+            y1Rotate: 0, // y1轴标签旋转角度
+            y1AxisName: 'Y1轴', // y1轴名称
+            y1AxisLabelColor: theme['chart-label'], // y1轴标签颜色
+            y2Rotate: 0, // y2轴标签旋转角度
+            y2AxisName: 'Y2轴', // y2轴名称
+            y2AxisLabelColor: theme['chart-label'], // y2轴标签颜色
+            names: ['用户总数', '新增用户数'],
+            keys: ['key1Value', 'key2Value'],
+            y1Keys: [],
+            y2Keys: [],
+            isAreaStyle: false,
+            colorList: [
+                '#478ff7',
+                '#ff7f4c',
+                '#7fa7b8',
+                '#f1485b',
+                '#26cdcb',
+                '#7565c7',
+                '#27a9f4',
+                '#778efe',
+                '#4ccb70',
+                '#ffca3a',
+            ],
+            optionPieLines: {},
+            enableDoubleYAxis: false, // 是否启用双y轴
+            resetOrder: true, // 设置是否对数据重排序
+            symbolSize: 6,
+            showDataZoom: false,
+            lastDotted: false,
+            toolTipFormatter: null,
+            legendFormatter: null,
+            xAxisFormatter: null,
+            yAxisFormatter: null,
+            smooth: true,
+            pieCenter: ['15%', '50%'],
+            pieRadius: '30%',
+        },
+        dataOption: {
+            url: '/json/test.json',
+            objName: 'linesChart',
             method: 'get',
             data: [],
             params: {

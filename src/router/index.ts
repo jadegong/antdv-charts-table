@@ -1,5 +1,6 @@
 /**
- * v1.0.0 2023/01/18 gqd Finish basic echarts table component router config;
+ * v0.0.1-alpha 2023/01/18 gqd Finish basic echarts table component router config;
+ * v0.0.4-alpha 2023/04/12 gqd Add pieBar and pieLines chart demo;
  */
 import HomeView from '../views/HomeView.vue';
 import DemoContainer from '../layouts/index.vue';
@@ -60,6 +61,18 @@ const routes = [
         name: 'mixedChartsDemoBarLine',
         component: () => import('../views/BarLineChart/index.vue'),
         meta: { title: '柱状折线图' },
+      },
+      {
+        path: '/mixedChartsDemo/pieBar',
+        name: 'mixedChartsDemoPieBar',
+        component: () => import('../views/PieBarChart/index.vue'),
+        meta: { title: '柱状饼图联动' },
+      },
+      {
+        path: '/mixedChartsDemo/pieLines',
+        name: 'mixedChartsDemoPieLines',
+        component: () => import('../views/PieLinesChart/index.vue'),
+        meta: { title: '折线饼图联动' },
       },
     ],
   },
