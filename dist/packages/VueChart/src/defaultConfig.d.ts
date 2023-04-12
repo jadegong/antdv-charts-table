@@ -90,6 +90,7 @@ export declare const defaultConfig: {
             legendFormatter: any;
             xAxisFormatter: any;
             yAxisFormatter: any;
+            smooth: boolean;
         };
         dataOption: {
             url: string;
@@ -175,6 +176,7 @@ export declare const defaultConfig: {
             legendFormatter: any;
             xAxisFormatter: any;
             yAxisFormatter: any;
+            smooth: boolean;
         };
         dataOption: {
             url: string;
@@ -382,6 +384,163 @@ export declare const defaultConfig: {
             showY2Axis: boolean;
             showYAxisName: boolean;
             splitYAxis: boolean;
+            smooth: boolean;
+        };
+        dataOption: {
+            url: string;
+            objName: string;
+            method: string;
+            data: any[];
+            params: {
+                intfcType: string;
+                intfcTypeName: string;
+            };
+        };
+        exportOption: {
+            property: {
+                exportName: string;
+                exportRiskType: string;
+                exportAddress: string;
+                exportParams: string;
+            }[];
+            exportPermission: boolean;
+        };
+        customizeOption: {
+            index: number;
+            customizeType: string;
+            customizeIcon: string;
+            customizeDisable: string;
+            buttonConfig: {
+                url: string;
+                params: {
+                    searchParam: boolean;
+                    selectParam: boolean;
+                    configParam: {
+                        key: string;
+                        value: string;
+                    }[];
+                };
+                fileType: string;
+                fileSize: string;
+            };
+        }[];
+        GridX: number;
+        GridY: number;
+        w: number;
+        h: number;
+    };
+    pieBar: {
+        option: {
+            theme: string;
+            type: string;
+            keyName: string;
+            valueName: string[];
+            barType: string;
+            title: string;
+            name: string[];
+            barColor: string[];
+            colorList: string[];
+            gridLeft: string;
+            gridRight: string;
+            gridTop: string;
+            gridBottom: string;
+            legendShow: boolean;
+            xAxisLabelColor: string;
+            yAxisLabelColor: string;
+            orient: string;
+            legendLeft: string;
+            legendTop: string;
+            optionBar: {};
+            pieCenter: string[];
+            pieRadius: string;
+        };
+        dataOption: {
+            url: string;
+            objName: string;
+            method: string;
+            data: any[];
+            params: {
+                intfcType: string;
+                intfcTypeName: string;
+            };
+        };
+        exportOption: {
+            property: {
+                exportName: string;
+                exportRiskType: string;
+                exportAddress: string;
+                exportParams: string;
+            }[];
+            exportPermission: boolean;
+        };
+        customizeOption: {
+            index: number;
+            customizeType: string;
+            customizeIcon: string;
+            customizeDisable: string;
+            buttonConfig: {
+                url: string;
+                params: {
+                    searchParam: boolean;
+                    selectParam: boolean;
+                    configParam: {
+                        key: string;
+                        value: string;
+                    }[];
+                };
+                fileType: string;
+                fileSize: string;
+            };
+        }[];
+        GridX: number;
+        GridY: number;
+        w: number;
+        h: number;
+    };
+    pieLines: {
+        option: {
+            theme: string;
+            type: string;
+            data: any[];
+            title: string;
+            name: string;
+            keyName: string;
+            valueName: string;
+            gridLeft: string;
+            gridRight: string;
+            gridTop: string;
+            gridBottom: string;
+            legendShow: boolean;
+            orient: string;
+            legendLeft: string;
+            legendTop: string;
+            xRotate: number;
+            xAxisLabelColor: string;
+            y1Rotate: number;
+            y1AxisName: string;
+            y1AxisLabelColor: string;
+            y2Rotate: number;
+            y2AxisName: string;
+            y2AxisLabelColor: string;
+            names: string[];
+            keys: string[];
+            y1Keys: any[];
+            y2Keys: any[];
+            isAreaStyle: boolean;
+            colorList: string[];
+            optionPieLines: {};
+            enableDoubleYAxis: boolean;
+            resetOrder: boolean;
+            symbolSize: number;
+            showDataZoom: boolean;
+            lastDotted: boolean;
+            toolTipFormatter: any;
+            legendFormatter: any;
+            xAxisFormatter: any;
+            yAxisFormatter: any;
+            smooth: boolean;
+            pieCenter: string[];
+            pieRadius: string;
         };
         dataOption: {
             url: string;

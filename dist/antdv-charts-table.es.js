@@ -21220,7 +21220,7 @@ var TableOutlined = function(C, G) {
 };
 TableOutlined.displayName = "TableOutlined";
 TableOutlined.inheritAttrs = !1;
-const TableOutlined$1 = TableOutlined, _sfc_main$9 = defineComponent({
+const TableOutlined$1 = TableOutlined, _sfc_main$b = defineComponent({
   name: "NoData",
   props: {
     data: {
@@ -21237,7 +21237,7 @@ const TableOutlined$1 = TableOutlined, _sfc_main$9 = defineComponent({
   for (const [U, K] of C)
     G[U] = K;
   return G;
-}, _hoisted_1$8 = { className: "ant-empty ant-empty-normal" }, _hoisted_2$7 = /* @__PURE__ */ createElementVNode("div", { className: "ant-empty-image" }, [
+}, _hoisted_1$a = { className: "ant-empty ant-empty-normal" }, _hoisted_2$9 = /* @__PURE__ */ createElementVNode("div", { className: "ant-empty-image" }, [
   /* @__PURE__ */ createElementVNode("svg", {
     width: "64",
     height: "41",
@@ -21269,7 +21269,7 @@ const TableOutlined$1 = TableOutlined, _sfc_main$9 = defineComponent({
     ])
   ])
 ], -1), _hoisted_3$1 = { className: "ant-empty-description" };
-function _sfc_render$9(H, C, G, U, K, W) {
+function _sfc_render$b(H, C, G, U, K, W) {
   return openBlock(), createElementBlock("div", {
     style: normalizeStyle$1({
       display: `${H.data && H.data.length > 0 ? "none" : "block"}`,
@@ -21279,13 +21279,13 @@ function _sfc_render$9(H, C, G, U, K, W) {
       transform: "translate(-50%,-50%)"
     })
   }, [
-    createElementVNode("div", _hoisted_1$8, [
-      _hoisted_2$7,
+    createElementVNode("div", _hoisted_1$a, [
+      _hoisted_2$9,
       createElementVNode("p", _hoisted_3$1, toDisplayString(H.text), 1)
     ])
   ], 4);
 }
-const NoData = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$9]]);
+const NoData = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$b]]);
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -25877,15 +25877,15 @@ function pushTokens(H, C, G, U, K) {
       X.push(new RichTextLine([ue]));
   }
 }
-function isLatin(H) {
+function isAlphabeticLetter(H) {
   var C = H.charCodeAt(0);
-  return C >= 33 && C <= 383;
+  return C >= 32 && C <= 591 || C >= 880 && C <= 4351 || C >= 4608 && C <= 5119 || C >= 7680 && C <= 8303;
 }
 var breakCharMap = reduce(",&?/;] ".split(""), function(H, C) {
   return H[C] = !0, H;
 }, {});
 function isWordBreakChar(H) {
-  return isLatin(H) ? !!breakCharMap[H] : !0;
+  return isAlphabeticLetter(H) ? !!breakCharMap[H] : !0;
 }
 function wrapText(H, C, G, U, K) {
   for (var W = [], Z = [], X = "", Q = "", ee = 0, te = 0, re = 0; re < H.length; re++) {
@@ -30695,12 +30695,8 @@ function determineSourceDimensions(H, C, G, U, K) {
 function objectRowsCollectDimensions(H) {
   for (var C = 0, G; C < H.length && !(G = H[C++]); )
     ;
-  if (G) {
-    var U = [];
-    return each$f(G, function(K, W) {
-      U.push(W);
-    }), U;
-  }
+  if (G)
+    return keys(G);
 }
 function normalizeDimensionsOption(H) {
   if (H) {
@@ -32006,8 +32002,8 @@ function defaultSeriesFormatTooltip(H) {
   var oe = isNameSpecified(C), le = oe && C.name || "", ue = K.getName(G), ce = U ? le : ue;
   return createTooltipMarkup("section", {
     header: le,
-    // When series name not specified, do not show a header line with only '-'.
-    // This case alway happen in tooltip.trigger: 'item'.
+    // When series name is not specified, do not show a header line with only '-'.
+    // This case always happens in tooltip.trigger: 'item'.
     noHeader: U || !oe,
     sortParam: ae,
     blocks: [createTooltipMarkup("nameValue", {
@@ -37751,9 +37747,9 @@ function vNodeToString(H, C) {
   var G = C.newline ? `
 ` : "";
   function U(K) {
-    var W = K.children, Z = K.tag, X = K.attrs;
-    return createElementOpen(Z, X) + encodeHTML(K.text) + (W ? "" + G + map$1(W, function(Q) {
-      return U(Q);
+    var W = K.children, Z = K.tag, X = K.attrs, Q = K.text;
+    return createElementOpen(Z, X) + (Z !== "style" ? encodeHTML(Q) : Q || "") + (W ? "" + G + map$1(W, function(ee) {
+      return U(ee);
     }).join(G) + G : "") + createElementClose(Z);
   }
   return U(H);
@@ -39723,7 +39719,7 @@ var LineView = (
       var G = new Group$4(), U = new SymbolDraw$1();
       this.group.add(U.group), this._symbolDraw = U, this._lineGroup = G;
     }, C.prototype.render = function(G, U, K) {
-      var W = this, Z = G.coordinateSystem, X = this.group, Q = G.getData(), ee = G.getModel("lineStyle"), te = G.getModel("areaStyle"), re = Q.getLayout("points") || [], ne = Z.type === "polar", ae = this._coordSys, ie = this._symbolDraw, se = this._polyline, oe = this._polygon, le = this._lineGroup, ue = G.get("animation"), ce = !te.isEmpty(), de = te.get("origin"), ge = prepareDataCoordInfo(Z, Q, de), fe = ce && getStackedOnPoints(Z, Q, ge), ve = G.get("showSymbol"), pe = G.get("connectNulls"), he = ve && !ne && getIsIgnoreFunc(G, Q, Z), me = this._data;
+      var W = this, Z = G.coordinateSystem, X = this.group, Q = G.getData(), ee = G.getModel("lineStyle"), te = G.getModel("areaStyle"), re = Q.getLayout("points") || [], ne = Z.type === "polar", ae = this._coordSys, ie = this._symbolDraw, se = this._polyline, oe = this._polygon, le = this._lineGroup, ue = !U.ssr && G.isAnimationEnabled(), ce = !te.isEmpty(), de = te.get("origin"), ge = prepareDataCoordInfo(Z, Q, de), fe = ce && getStackedOnPoints(Z, Q, ge), ve = G.get("showSymbol"), pe = G.get("connectNulls"), he = ve && !ne && getIsIgnoreFunc(G, Q, Z), me = this._data;
       me && me.eachItemGraphicEl(function(Ne, ke) {
         Ne.__temp && (X.remove(Ne), me.setItemGraphicEl(ke, null));
       }), ve || ie.remove(), X.add(le);
@@ -40106,19 +40102,38 @@ var BaseBarSeriesModel = (
     }, C.prototype.getMarkerPosition = function(G, U, K) {
       var W = this.coordinateSystem;
       if (W && W.clampData) {
-        var Z = W.dataToPoint(W.clampData(G));
+        var Z = W.clampData(G), X = W.dataToPoint(Z);
         if (K)
-          each$f(W.getAxes(), function(re, ne) {
-            if (re.type === "category") {
-              var ae = re.getTicksCoords(), ie = W.clampData(G)[ne];
-              U && (U[ne] === "x1" || U[ne] === "y1") && (ie += 1), ie > ae.length - 1 && (ie = ae.length - 1), ie < 0 && (ie = 0), ae[ie] && (Z[ne] = re.toGlobalCoord(ae[ie].coord));
+          each$f(W.getAxes(), function(ne, ae) {
+            if (ne.type === "category" && U != null) {
+              var ie = ne.getTicksCoords(), se = Z[ae], oe = U[ae] === "x1" || U[ae] === "y1";
+              if (oe && (se += 1), ie.length < 2)
+                return;
+              if (ie.length === 2) {
+                X[ae] = ne.toGlobalCoord(ne.getExtent()[oe ? 1 : 0]);
+                return;
+              }
+              for (var le = void 0, ue = void 0, ce = 1, de = 0; de < ie.length; de++) {
+                var ge = ie[de].coord, fe = de === ie.length - 1 ? ie[de - 1].tickValue + ce : ie[de].tickValue;
+                if (fe === se) {
+                  ue = ge;
+                  break;
+                } else if (fe < se)
+                  le = ge;
+                else if (le != null && fe > se) {
+                  ue = (ge + le) / 2;
+                  break;
+                }
+                de === 1 && (ce = fe - ie[0].tickValue);
+              }
+              ue == null && (le ? le && (ue = ie[ie.length - 1].coord) : ue = ie[0].coord), X[ae] = ne.toGlobalCoord(ue);
             }
           });
         else {
-          var X = this.getData(), Q = X.getLayout("offset"), ee = X.getLayout("size"), te = W.getBaseAxis().isHorizontal() ? 0 : 1;
-          Z[te] += Q + ee / 2;
+          var Q = this.getData(), ee = Q.getLayout("offset"), te = Q.getLayout("size"), re = W.getBaseAxis().isHorizontal() ? 0 : 1;
+          X[re] += ee + te / 2;
         }
-        return Z;
+        return X;
       }
       return [NaN, NaN];
     }, C.type = "series.__base_bar__", C.defaultOption = {
@@ -40305,6 +40320,20 @@ function adjustAngleDistanceX(H, C, G) {
 function adjustAngleDistanceY(H, C, G) {
   return C * Math.cos(H) * (G ? 1 : -1);
 }
+function getSectorCornerRadius(H, C, G) {
+  var U = H.get("borderRadius");
+  if (U == null)
+    return G ? {
+      cornerRadius: 0
+    } : null;
+  isArray$1(U) || (U = [U, U, U, U]);
+  var K = Math.abs(C.r || 0 - C.r0 || 0);
+  return {
+    cornerRadius: map$1(U, function(W) {
+      return parsePercent$1(W, K);
+    })
+  };
+}
 var mathMax$4 = Math.max, mathMin$4 = Math.min;
 function getClipArea(H, C) {
   var G = H.getArea && H.getArea();
@@ -40348,7 +40377,7 @@ var BarView = (
       var oe = G.get("roundCap", !0), le = G.get("showBackground", !0), ue = G.getModel("backgroundStyle"), ce = ue.get("borderRadius") || 0, de = [], ge = this._backgroundEls, fe = W && W.isInitSort, ve = W && W.type === "changeAxisOrder";
       function pe(ye) {
         var Ce = getLayout[ee.type](X, ye), Ie = createBackgroundEl(ee, re, Ce);
-        return Ie.useStyle(ue.getItemStyle()), ee.type === "cartesian2d" && Ie.setShape("r", ce), de[ye] = Ie, Ie;
+        return Ie.useStyle(ue.getItemStyle()), ee.type === "cartesian2d" ? Ie.setShape("r", ce) : Ie.setShape("cornerRadius", ce), de[ye] = Ie, Ie;
       }
       X.diff(Q).add(function(ye) {
         var Ce = X.getItemModel(ye), Ie = getLayout[ee.type](X, ye, Ce);
@@ -40366,7 +40395,7 @@ var BarView = (
         var Ie = X.getItemModel(ye), be = getLayout[ee.type](X, ye, Ie);
         if (le) {
           var Se = void 0;
-          ge.length === 0 ? Se = pe(Ce) : (Se = ge[Ce], Se.useStyle(ue.getItemStyle()), ee.type === "cartesian2d" && Se.setShape("r", ce), de[ye] = Se);
+          ge.length === 0 ? Se = pe(Ce) : (Se = ge[Ce], Se.useStyle(ue.getItemStyle()), ee.type === "cartesian2d" ? Se.setShape("r", ce) : Se.setShape("cornerRadius", ce), de[ye] = Se);
           var Ae = getLayout[ee.type](X, ye), _e = createBackgroundShape(re, Ae, ee);
           updateProps$1(Se, {
             shape: _e
@@ -40534,7 +40563,7 @@ var BarView = (
       isRoundCap: ee === Sausage
     }), W) {
       var ne = te.shape, ae = K ? "r" : "endAngle", ie = {};
-      ne[ae] = K ? 0 : U.startAngle, ie[ae] = U[ae], (X ? updateProps$1 : initProps)(te, {
+      ne[ae] = K ? U.r0 : U.startAngle, ie[ae] = U[ae], (X ? updateProps$1 : initProps)(te, {
         shape: ie
         // __value: typeof dataValue === 'string' ? parseInt(dataValue, 10) : dataValue
       }, W);
@@ -40631,29 +40660,38 @@ function createPolarPositionMapping(H) {
 }
 function updateStyle(H, C, G, U, K, W, Z, X) {
   var Q = C.getItemVisual(G, "style");
-  X || H.setShape("r", U.get(["itemStyle", "borderRadius"]) || 0), H.useStyle(Q);
-  var ee = U.getShallow("cursor");
-  ee && H.attr("cursor", ee);
-  var te = X ? Z ? K.r >= K.r0 ? "endArc" : "startArc" : K.endAngle >= K.startAngle ? "endAngle" : "startAngle" : Z ? K.height >= 0 ? "bottom" : "top" : K.width >= 0 ? "right" : "left", re = getLabelStatesModels(U);
-  setLabelStyle(H, re, {
+  if (X) {
+    if (!W.get("roundCap")) {
+      var te = H.shape, re = getSectorCornerRadius(U.getModel("itemStyle"), te, !0);
+      extend(te, re), H.setShape(te);
+    }
+  } else {
+    var ee = U.get(["itemStyle", "borderRadius"]) || 0;
+    H.setShape("r", ee);
+  }
+  H.useStyle(Q);
+  var ne = U.getShallow("cursor");
+  ne && H.attr("cursor", ne);
+  var ae = X ? Z ? K.r >= K.r0 ? "endArc" : "startArc" : K.endAngle >= K.startAngle ? "endAngle" : "startAngle" : Z ? K.height >= 0 ? "bottom" : "top" : K.width >= 0 ? "right" : "left", ie = getLabelStatesModels(U);
+  setLabelStyle(H, ie, {
     labelFetcher: W,
     labelDataIndex: G,
     defaultText: getDefaultLabel(W.getData(), G),
     inheritColor: Q.fill,
     defaultOpacity: Q.opacity,
-    defaultOutsidePosition: te
+    defaultOutsidePosition: ae
   });
-  var ne = H.getTextContent();
-  if (X && ne) {
-    var ae = U.get(["label", "position"]);
-    H.textConfig.inside = ae === "middle" ? !0 : null, setSectorTextRotation(H, ae === "outside" ? te : ae, createPolarPositionMapping(Z), U.get(["label", "rotate"]));
+  var se = H.getTextContent();
+  if (X && se) {
+    var oe = U.get(["label", "position"]);
+    H.textConfig.inside = oe === "middle" ? !0 : null, setSectorTextRotation(H, oe === "outside" ? ae : oe, createPolarPositionMapping(Z), U.get(["label", "rotate"]));
   }
-  setLabelValueAnimation(ne, re, W.getRawValue(G), function(se) {
-    return getDefaultInterpolatedLabel(C, se);
+  setLabelValueAnimation(se, ie, W.getRawValue(G), function(ue) {
+    return getDefaultInterpolatedLabel(C, ue);
   });
-  var ie = U.getModel(["emphasis"]);
-  toggleHoverEmphasis(H, ie.get("focus"), ie.get("blurScope"), ie.get("disabled")), setStatesStylesFromModel(H, U), isZeroOnPolar(K) && (H.style.fill = "none", H.style.stroke = "none", each$f(H.states, function(se) {
-    se.style && (se.style.fill = se.style.stroke = "none");
+  var le = U.getModel(["emphasis"]);
+  toggleHoverEmphasis(H, le.get("focus"), le.get("blurScope"), le.get("disabled")), setStatesStylesFromModel(H, U), isZeroOnPolar(K) && (H.style.fill = "none", H.style.stroke = "none", each$f(H.states, function(ue) {
+    ue.style && (ue.style.fill = ue.style.stroke = "none");
   }));
 }
 function getLineWidth(H, C) {
@@ -41058,20 +41096,6 @@ function pieLabelLayout(H) {
       });
     }
   }
-}
-function getSectorCornerRadius(H, C, G) {
-  var U = H.get("borderRadius");
-  if (U == null)
-    return G ? {
-      cornerRadius: 0
-    } : null;
-  isArray$1(U) || (U = [U, U, U, U]);
-  var K = Math.abs(C.r || 0 - C.r0 || 0);
-  return {
-    cornerRadius: map$1(U, function(W) {
-      return parsePercent$1(W, K);
-    })
-  };
 }
 var PiePiece = (
   /** @class */
@@ -42509,7 +42533,7 @@ function buildAxisLabel(H, C, G, U) {
             // in category axis.
             // (2) Compatible with previous version, which always use formatted label as
             // input. But in interval scale the formatted label is like '223,445', which
-            // maked user repalce ','. So we modify it to return original val but remain
+            // maked user replace ','. So we modify it to return original val but remain
             // it as 'string' to avoid error in replacing.
             K.type === "category" ? ce : K.type === "value" ? le + "" : le,
             oe
@@ -53320,7 +53344,7 @@ var DEFAULT_SECTOR_Z = 2, DEFAULT_TEXT_Z = 4, SunburstPiece = (
         ce.style = de.getItemStyle();
         var ge = getSectorCornerRadius(de, re);
         ge && (ce.shape = ge);
-      }), G ? (X.setShape(re), X.shape.r = te.r0, updateProps$1(X, {
+      }), G ? (X.setShape(re), X.shape.r = te.r0, initProps(X, {
         shape: {
           r: te.r
         }
@@ -53346,7 +53370,7 @@ var DEFAULT_SECTOR_Z = 2, DEFAULT_TEXT_Z = 4, SunburstPiece = (
         var me, ye = oe(ue, "distance") || 0, Ce = oe(ue, "align");
         ve === "outside" ? (me = Z.r + ye, Ce = Q > Math.PI / 2 ? "right" : "left") : !Ce || Ce === "center" ? (X === 2 * Math.PI && Z.r0 === 0 ? me = 0 : me = (Z.r + Z.r0) / 2, Ce = "center") : Ce === "left" ? (me = Z.r0 + ye, Q > Math.PI / 2 && (Ce = "right")) : Ce === "right" && (me = Z.r - ye, Q > Math.PI / 2 && (Ce = "left")), de.style.align = Ce, de.style.verticalAlign = oe(ue, "verticalAlign") || "middle", de.x = me * ee + Z.cx, de.y = me * te + Z.cy;
         var Ie = oe(ue, "rotate"), be = 0;
-        Ie === "radial" ? (be = -Q, be < -Math.PI / 2 && (be += Math.PI)) : Ie === "tangential" ? (be = Math.PI / 2 - Q, be > Math.PI / 2 ? be -= Math.PI : be < -Math.PI / 2 && (be += Math.PI)) : isNumber(Ie) && (be = Ie * Math.PI / 180), de.rotation = be;
+        Ie === "radial" ? (be = normalizeRadian(-Q), be > Math.PI / 2 && be < Math.PI * 1.5 && (be += Math.PI)) : Ie === "tangential" ? (be = Math.PI / 2 - Q, be > Math.PI / 2 ? be -= Math.PI : be < -Math.PI / 2 && (be += Math.PI)) : isNumber(Ie) && (be = Ie * Math.PI / 180), de.rotation = be;
       });
       function oe(le, ue) {
         var ce = le.get(ue);
@@ -54812,7 +54836,7 @@ function buildLabelElOption(H, C, G, U, K) {
       padding: Q,
       backgroundColor: oe
     }),
-    // Lable should be over axisPointer.
+    // Label should be over axisPointer.
     z2: 10
   };
 }
@@ -58763,7 +58787,7 @@ var TooltipHTMLContent = (
   /** @class */
   function() {
     function H(C, G, U) {
-      if (this._show = !1, this._styleCoord = [0, 0, 0, 0], this._enterable = !0, this._firstShow = !0, this._longHide = !0, env$1.wxa)
+      if (this._show = !1, this._styleCoord = [0, 0, 0, 0], this._enterable = !0, this._alwaysShowContent = !1, this._firstShow = !0, this._longHide = !0, env$1.wxa)
         return null;
       var K = document.createElement("div");
       K.domBelongToZr = !0, this.el = K;
@@ -58785,7 +58809,7 @@ var TooltipHTMLContent = (
       var G = this._container, U = getComputedStyle$1(G, "position"), K = G.style;
       K.position !== "absolute" && U !== "absolute" && (K.position = "relative");
       var W = C.get("alwaysShowContent");
-      W && this._moveIfResized(), this.el.className = C.get("className") || "";
+      W && this._moveIfResized(), this._alwaysShowContent = W, this.el.className = C.get("className") || "";
     }, H.prototype.show = function(C, G) {
       clearTimeout(this._hideTimeout), clearTimeout(this._longHideTimeout);
       var U = this.el, K = U.style, W = this._styleCoord;
@@ -58830,7 +58854,7 @@ var TooltipHTMLContent = (
         return C._longHide = !0;
       }, 500);
     }, H.prototype.hideLater = function(C) {
-      this._show && !(this._inContent && this._enterable) && (C ? (this._hideDelay = C, this._show = !1, this._hideTimeout = setTimeout(bind$1(this.hide, this), C)) : this.hide());
+      this._show && !(this._inContent && this._enterable) && !this._alwaysShowContent && (C ? (this._hideDelay = C, this._show = !1, this._hideTimeout = setTimeout(bind$1(this.hide, this), C)) : this.hide());
     }, H.prototype.isShow = function() {
       return this._show;
     }, H.prototype.dispose = function() {
@@ -58843,11 +58867,11 @@ var TooltipRichContent = (
   /** @class */
   function() {
     function H(C) {
-      this._show = !1, this._styleCoord = [0, 0, 0, 0], this._enterable = !0, this._zr = C.getZr(), makeStyleCoord(this._styleCoord, this._zr, C.getWidth() / 2, C.getHeight() / 2);
+      this._show = !1, this._styleCoord = [0, 0, 0, 0], this._alwaysShowContent = !1, this._enterable = !0, this._zr = C.getZr(), makeStyleCoord(this._styleCoord, this._zr, C.getWidth() / 2, C.getHeight() / 2);
     }
     return H.prototype.update = function(C) {
       var G = C.get("alwaysShowContent");
-      G && this._moveIfResized();
+      G && this._moveIfResized(), this._alwaysShowContent = G;
     }, H.prototype.show = function() {
       this._hideTimeout && clearTimeout(this._hideTimeout), this.el.show(), this._show = !0;
     }, H.prototype.setContent = function(C, G, U, K, W) {
@@ -58898,7 +58922,7 @@ var TooltipRichContent = (
     }, H.prototype.hide = function() {
       this.el && this.el.hide(), this._show = !1;
     }, H.prototype.hideLater = function(C) {
-      this._show && !(this._inContent && this._enterable) && (C ? (this._hideDelay = C, this._show = !1, this._hideTimeout = setTimeout(bind$1(this.hide, this), C)) : this.hide());
+      this._show && !(this._inContent && this._enterable) && !this._alwaysShowContent && (C ? (this._hideDelay = C, this._show = !1, this._hideTimeout = setTimeout(bind$1(this.hide, this), C)) : this.hide());
     }, H.prototype.isShow = function() {
       return this._show;
     }, H.prototype.dispose = function() {
@@ -58946,7 +58970,7 @@ var proxyRect = new Rect$3({
       }
     }, C.prototype.render = function(G, U, K) {
       if (!(env$1.node || !K.getDom())) {
-        this.group.removeAll(), this._tooltipModel = G, this._ecModel = U, this._api = K, this._alwaysShowContent = G.get("alwaysShowContent");
+        this.group.removeAll(), this._tooltipModel = G, this._ecModel = U, this._api = K;
         var W = this._tooltipContent;
         W.update(G), W.setEnterable(G.get("enterable")), this._initGlobalListener(), this._keepShow(), this._renderMode !== "richText" && G.get("transitionDuration") ? createOrUpdate(this, "_updatePosition", 50, "fixRate") : clear$1(this, "_updatePosition");
       }
@@ -59028,7 +59052,7 @@ var proxyRect = new Rect$3({
       }
     }, C.prototype.manuallyHideTip = function(G, U, K, W) {
       var Z = this._tooltipContent;
-      !this._alwaysShowContent && this._tooltipModel && Z.hideLater(this._tooltipModel.get("hideDelay")), this._lastX = this._lastY = this._lastDataByCoordSys = null, W.from !== this.uid && this._hide(makeDispatchAction(W, K));
+      this._tooltipModel && Z.hideLater(this._tooltipModel.get("hideDelay")), this._lastX = this._lastY = this._lastDataByCoordSys = null, W.from !== this.uid && this._hide(makeDispatchAction(W, K));
     }, C.prototype._manuallyAxisShowTip = function(G, U, K, W) {
       var Z = W.seriesIndex, X = W.dataIndex, Q = U.getComponent("axisPointer").coordSysAxesInfo;
       if (!(Z == null || X == null || Q == null)) {
@@ -60633,8 +60657,8 @@ var markerTypeCalculator = {
 };
 function dataTransform(H, C) {
   if (C) {
-    var G = H.getData(), U = H.coordinateSystem, K = U.dimensions;
-    if (!hasXAndY(C) && !isArray$1(C.coord) && U) {
+    var G = H.getData(), U = H.coordinateSystem, K = U && U.dimensions;
+    if (!hasXAndY(C) && !isArray$1(C.coord) && isArray$1(K)) {
       var W = getAxisInfo(C, G, U, H);
       if (C = clone$4(C), C.type && markerTypeCalculator[C.type] && W.baseAxis && W.valueAxis) {
         var Z = indexOf(K, W.baseAxis.dim), X = indexOf(K, W.valueAxis.dim), Q = markerTypeCalculator[C.type](G, W.baseDataDim, W.valueDataDim, Z, X);
@@ -60642,7 +60666,7 @@ function dataTransform(H, C) {
       } else
         C.coord = [C.xAxis != null ? C.xAxis : C.radiusAxis, C.yAxis != null ? C.yAxis : C.angleAxis];
     }
-    if (C.coord == null)
+    if (C.coord == null || !isArray$1(K))
       C.coord = [];
     else
       for (var ee = C.coord, te = 0; te < 2; te++)
@@ -63129,7 +63153,7 @@ var linearMap = linearMap$2, each$1 = each$f, mathMin = Math.min, mathMax = Math
         W,
         Z,
         G,
-        // cross is forbiden
+        // cross is forbidden
         0
       );
       var X = K.getExtent();
@@ -64023,7 +64047,7 @@ function parseConditionalExpression(H, C) {
 }
 var filterTransform = {
   type: "echarts:filter",
-  // PEDING: enhance to filter by index rather than create new data
+  // PENDING: enhance to filter by index rather than create new data
   transform: function(H) {
     for (var C = H.upstream, G, U = parseConditionalExpression(H.config, {
       valueGetterAttrMap: createHashMap({
@@ -65511,7 +65535,8 @@ ${C[X]}`, W++) : K += C[X]) : (Z += 1, K += C[X], X < Q - 1 && Z % G === 0 && X 
       toolTipFormatter: null,
       legendFormatter: null,
       xAxisFormatter: null,
-      yAxisFormatter: null
+      yAxisFormatter: null,
+      smooth: !0
     },
     dataOption: {
       url: "/json/test.json",
@@ -65636,7 +65661,8 @@ ${C[X]}`, W++) : K += C[X]) : (Z += 1, K += C[X], X < Q - 1 && Z % G === 0 && X 
       toolTipFormatter: null,
       legendFormatter: null,
       xAxisFormatter: null,
-      yAxisFormatter: null
+      yAxisFormatter: null,
+      smooth: !0
     },
     dataOption: {
       url: "/json/test.json",
@@ -65763,7 +65789,7 @@ ${C[X]}`, W++) : K += C[X]) : (Z += 1, K += C[X], X < Q - 1 && Z % G === 0 && X 
     option: {
       theme: "light",
       type: "pie",
-      title: "物联卡总体发展趋势",
+      title: "",
       keyName: "key",
       valueName: "value",
       orient: "vertical",
@@ -65883,11 +65909,214 @@ ${C[X]}`, W++) : K += C[X]) : (Z += 1, K += C[X], X < Q - 1 && Z % G === 0 && X 
       y2Rotate: 0,
       showY2Axis: !0,
       showYAxisName: !0,
-      splitYAxis: !1
+      splitYAxis: !1,
+      smooth: !0
     },
     dataOption: {
       url: "/json/test.json",
       objName: "barLineChart",
+      method: "get",
+      data: [],
+      params: {
+        intfcType: "baseProvince",
+        intfcTypeName: "测试intfcTypeName"
+      }
+    },
+    exportOption: {
+      property: [
+        {
+          exportName: "{dateName} {tab}",
+          exportRiskType: "",
+          exportAddress: "riskPlatform/exportJson",
+          exportParams: ""
+        }
+      ],
+      exportPermission: !0
+    },
+    customizeOption: [
+      {
+        index: 1,
+        customizeType: "upload",
+        customizeIcon: "download",
+        customizeDisable: "(()=>false)()",
+        buttonConfig: {
+          url: "",
+          params: {
+            searchParam: !1,
+            selectParam: !1,
+            configParam: [
+              {
+                key: "key",
+                value: "value"
+              }
+            ]
+          },
+          fileType: "",
+          fileSize: "100"
+        }
+      }
+    ],
+    GridX: 0,
+    GridY: 0,
+    w: 24,
+    h: 24
+  },
+  pieBar: {
+    option: {
+      theme: "light",
+      type: "pieBar",
+      keyName: "key",
+      valueName: ["value", "value1"],
+      barType: "horizontal",
+      title: "物联卡总体发展趋势",
+      name: ["用户数", "总用户数"],
+      barColor: ["#60AAFF", "#7687A1"],
+      colorList: ["#60AAFF"],
+      gridLeft: "30%",
+      gridRight: "10%",
+      gridTop: "20%",
+      gridBottom: "20%",
+      legendShow: !0,
+      xAxisLabelColor: theme["chart-label"],
+      yAxisLabelColor: theme["chart-label"],
+      orient: "horizontal",
+      legendLeft: "center",
+      legendTop: "30px",
+      optionBar: {},
+      pieCenter: ["15%", "50%"],
+      pieRadius: "30%"
+    },
+    dataOption: {
+      url: "/json/test.json",
+      objName: "barChart",
+      method: "get",
+      data: [],
+      params: {
+        intfcType: "baseProvince",
+        intfcTypeName: "测试intfcTypeName"
+      }
+    },
+    exportOption: {
+      property: [
+        {
+          exportName: "{dateName} {tab}",
+          exportRiskType: "",
+          exportAddress: "riskPlatform/exportJson",
+          exportParams: ""
+        }
+      ],
+      exportPermission: !0
+    },
+    customizeOption: [
+      {
+        index: 1,
+        customizeType: "upload",
+        customizeIcon: "download",
+        customizeDisable: "(()=>false)()",
+        buttonConfig: {
+          url: "",
+          params: {
+            searchParam: !1,
+            selectParam: !1,
+            configParam: [
+              {
+                key: "key",
+                value: "value"
+              }
+            ]
+          },
+          fileType: "",
+          fileSize: "100"
+        }
+      }
+    ],
+    GridX: 0,
+    GridY: 0,
+    w: 24,
+    h: 24
+  },
+  pieLines: {
+    option: {
+      theme: "light",
+      type: "pieLines",
+      data: [],
+      // 图表数据
+      title: "",
+      // 图表名称
+      name: "多折线图",
+      // 线名称
+      keyName: "key",
+      // 数据展现坐标KEY名称
+      valueName: "value",
+      // 数据展现值
+      gridLeft: "30%",
+      // grid 组件离容器左侧的距离
+      gridRight: "10%",
+      // grid 组件离容器右侧的距离
+      gridTop: "20%",
+      // grid 组件离容器上侧的距离
+      gridBottom: "20%",
+      // grid 组件离容器下侧的距离
+      legendShow: !0,
+      // 是否显示legend
+      orient: "horizontal",
+      // 图例布局朝向
+      legendLeft: "center",
+      // 图例组件离容器左侧的距离
+      legendTop: "30px",
+      // 图例组件离容器上侧的距离
+      xRotate: 0,
+      // x轴标签旋转角度
+      xAxisLabelColor: theme["chart-label"],
+      // x轴标签颜色
+      y1Rotate: 0,
+      // y1轴标签旋转角度
+      y1AxisName: "Y1轴",
+      // y1轴名称
+      y1AxisLabelColor: theme["chart-label"],
+      // y1轴标签颜色
+      y2Rotate: 0,
+      // y2轴标签旋转角度
+      y2AxisName: "Y2轴",
+      // y2轴名称
+      y2AxisLabelColor: theme["chart-label"],
+      // y2轴标签颜色
+      names: ["用户总数", "新增用户数"],
+      keys: ["key1Value", "key2Value"],
+      y1Keys: [],
+      y2Keys: [],
+      isAreaStyle: !1,
+      colorList: [
+        "#478ff7",
+        "#ff7f4c",
+        "#7fa7b8",
+        "#f1485b",
+        "#26cdcb",
+        "#7565c7",
+        "#27a9f4",
+        "#778efe",
+        "#4ccb70",
+        "#ffca3a"
+      ],
+      optionPieLines: {},
+      enableDoubleYAxis: !1,
+      // 是否启用双y轴
+      resetOrder: !0,
+      // 设置是否对数据重排序
+      symbolSize: 6,
+      showDataZoom: !1,
+      lastDotted: !1,
+      toolTipFormatter: null,
+      legendFormatter: null,
+      xAxisFormatter: null,
+      yAxisFormatter: null,
+      smooth: !0,
+      pieCenter: ["15%", "50%"],
+      pieRadius: "30%"
+    },
+    dataOption: {
+      url: "/json/test.json",
+      objName: "linesChart",
       method: "get",
       data: [],
       params: {
@@ -67379,7 +67608,7 @@ ${C[X]}`, W++) : K += C[X]) : (Z += 1, K += C[X], X < Q - 1 && Z % G === 0 && X 
   }
 };
 let barChart = null;
-const _sfc_main$8 = defineComponent({
+const _sfc_main$a = defineComponent({
   name: "BarChart",
   props: {
     option: {
@@ -67483,10 +67712,8 @@ const _sfc_main$8 = defineComponent({
               formatter(value, index) {
                 return option.xAxisFormatter ? eval(option.xAxisFormatter).call(this, value, index) : toolUtil.commafy(value);
               },
-              textStyle: {
-                // color: opts.xAxisLabelColor,
-                fontSize: 12
-              }
+              // color: opts.xAxisLabelColor,
+              fontSize: 12
             },
             nameTextStyle: {
               // color: '#ffffff',
@@ -67508,9 +67735,7 @@ const _sfc_main$8 = defineComponent({
               formatter(value, index) {
                 return option.yAxisFormatter ? eval(option.yAxisFormatter).call(this, value, index) : toolUtil.formatCharts(value, 18);
               },
-              textStyle: {
-                fontSize: 12
-              }
+              fontSize: 12
             },
             nameTextStyle: {
               fontSize: 12
@@ -67525,22 +67750,16 @@ const _sfc_main$8 = defineComponent({
             barMinHeight: 5,
             barMaxWidth: 30,
             itemStyle: {
-              normal: {
-                color: ""
-              }
+              color: ""
             },
             label: {
-              normal: {
-                show: !0,
-                position: "right",
-                formatter(param) {
-                  return option.labelFormatter ? eval(option.labelFormatter).call(this, param) : toolUtil.commafy(param.value);
-                },
-                textStyle: {
-                  fontSize: 12
-                  // color: '#fff',
-                }
-              }
+              show: !0,
+              position: "right",
+              formatter(param) {
+                return option.labelFormatter ? eval(option.labelFormatter).call(this, param) : toolUtil.commafy(param.value);
+              },
+              fontSize: 12
+              // color: '#fff',
             },
             data: []
           }
@@ -67617,10 +67836,8 @@ const _sfc_main$8 = defineComponent({
               formatter(value, index) {
                 return option.xAxisFormatter ? eval(option.xAxisFormatter).call(this, value, index) : toolUtil.formatCharts(value, 12);
               },
-              textStyle: {
-                // color: opts.xAxisLabelColor,
-                fontSize: 12
-              }
+              // color: opts.xAxisLabelColor,
+              fontSize: 12
             },
             splitLine: {
               show: !1
@@ -67643,10 +67860,8 @@ const _sfc_main$8 = defineComponent({
               formatter(value, index) {
                 return option.yAxisFormatter ? eval(option.yAxisFormatter).call(this, value, index) : toolUtil.commafy(value);
               },
-              textStyle: {
-                // color: opts.yAxisLabelColor,
-                fontSize: 12
-              }
+              // color: opts.yAxisLabelColor,
+              fontSize: 12
             },
             nameTextStyle: {
               // color: '#ffffff',
@@ -67663,22 +67878,16 @@ const _sfc_main$8 = defineComponent({
             // barMinHeight: 5,
             barMaxWidth: 30,
             label: {
-              normal: {
-                show: !0,
-                position: "top",
-                formatter(param) {
-                  return option.labelFormatter ? eval(option.labelFormatter).call(this, param) : toolUtil.commafy(param.value);
-                },
-                textStyle: {
-                  fontSize: 12
-                  // color: '#fff',
-                }
-              }
+              show: !0,
+              position: "top",
+              formatter(param) {
+                return option.labelFormatter ? eval(option.labelFormatter).call(this, param) : toolUtil.commafy(param.value);
+              },
+              fontSize: 12
+              // color: '#fff',
             },
             itemStyle: {
-              normal: {
-                // color: '',
-              }
+              // color: '',
             },
             data: []
           }
@@ -67703,20 +67912,16 @@ const _sfc_main$8 = defineComponent({
           }) : opts.lastDotted ? G === data.length - 1 ? barOption.series[0].data.push({
             value: C[H[0]],
             itemStyle: {
-              normal: {
-                borderColor: opts.colorList.length > 1 ? opts.colorList[G] : opts.colorList[0],
-                borderType: "dotted",
-                borderWidth: "3",
-                color: "rgba(0,0,0,0.07)"
-              }
+              borderColor: opts.colorList.length > 1 ? opts.colorList[G] : opts.colorList[0],
+              borderType: "dotted",
+              borderWidth: "3",
+              color: "rgba(0,0,0,0.07)"
             },
             originalData: C
           }) : barOption.series[0].data.push({
             value: C[H[0]],
             itemStyle: opts.colorList.length > 1 ? {
-              normal: {
-                color: opts.colorList[G]
-              }
+              color: opts.colorList[G]
             } : {},
             originalData: C
           }) : barOption.series[0].data.push({
@@ -67724,19 +67929,17 @@ const _sfc_main$8 = defineComponent({
             symbolFlag: C.symbolFlag || "",
             // 用于区分客户简称相同时，设置toolTip用于区分的标志（该值多为客户ID）
             itemStyle: opts.colorList.length > 1 ? {
-              normal: {
-                color: opts.colorList[G]
-              }
+              color: opts.colorList[G]
             } : {},
             originalData: C
           });
         }), barOption.series.forEach((C) => {
-          opts.overlap && (C.stack = "总量"), opts.label || (C.label.normal.show = !1);
+          opts.overlap && (C.stack = "总量"), opts.label || (C.label.show = !1);
         }), opts.name.length > 1 ? barOption.series.forEach((C, G) => {
           barOption.series[G].name = opts.name[G];
         }) : barOption.series[0].name = opts.name[0], opts.name.length > 1 ? barOption.series.forEach((C, G) => {
-          barOption.series[G].itemStyle.normal.color = opts.barColor[G];
-        }) : barOption.series[0].itemStyle.normal.color = opts.barColor[0], self.showLabel = barOption.series[0].label.normal.show, opts.defaultLegend instanceof Array && opts.defaultLegend.length > 0)
+          barOption.series[G].itemStyle.color = opts.barColor[G];
+        }) : barOption.series[0].itemStyle.color = opts.barColor[0], self.showLabel = barOption.series[0].label.show, opts.defaultLegend instanceof Array && opts.defaultLegend.length > 0)
           opts.defaultLegend.forEach((C) => {
             barOption.legend.selected[C] = !0;
           });
@@ -67748,18 +67951,18 @@ const _sfc_main$8 = defineComponent({
       !this.flagClickEvent && opts.clickEvent && (this.flagClickEvent = !0, barChart.on("click", opts.clickEvent)), toolUtil.extend(barOption, opts.barOption), barChart.setOption(barOption, !0);
     }
   }
-}), _hoisted_1$7 = {
+}), _hoisted_1$9 = {
   ref: "domChart",
   style: { height: "100%", width: "100%" }
-}, _hoisted_2$6 = { style: { display: "none" } };
-function _sfc_render$8(H, C, G, U, K, W) {
-  return openBlock(), createElementBlock("div", _hoisted_1$7, [
-    createElementVNode("span", _hoisted_2$6, toDisplayString(H.option.type), 1)
+}, _hoisted_2$8 = { style: { display: "none" } };
+function _sfc_render$a(H, C, G, U, K, W) {
+  return openBlock(), createElementBlock("div", _hoisted_1$9, [
+    createElementVNode("span", _hoisted_2$8, toDisplayString(H.option.type), 1)
   ], 512);
 }
-const BarChart = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$8]]);
+const BarChart = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$a]]);
 let pieChart = null;
-const _sfc_main$7 = defineComponent({
+const _sfc_main$9 = defineComponent({
   name: "PieChart",
   props: {
     option: {
@@ -67892,18 +68095,18 @@ const _sfc_main$7 = defineComponent({
       toolUtil.extend(optionPie, opts.optionPie), pieChart.setOption(optionPie, !0);
     }
   }
-}), _hoisted_1$6 = {
+}), _hoisted_1$8 = {
   ref: "domChart",
   style: { height: "100%", width: "100%" }
-}, _hoisted_2$5 = { style: { display: "none" } };
-function _sfc_render$7(H, C, G, U, K, W) {
-  return openBlock(), createElementBlock("div", _hoisted_1$6, [
-    createElementVNode("span", _hoisted_2$5, toDisplayString(H.option.type), 1)
+}, _hoisted_2$7 = { style: { display: "none" } };
+function _sfc_render$9(H, C, G, U, K, W) {
+  return openBlock(), createElementBlock("div", _hoisted_1$8, [
+    createElementVNode("span", _hoisted_2$7, toDisplayString(H.option.type), 1)
   ], 512);
 }
-const PieChart = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$7]]), maxPointImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGIAAAA8CAYAAACdIW+JAAAACXBIWXMAAAsTAAALEwEAmpwYAAA7WGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgICAgICAgICB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIgogICAgICAgICAgICB4bWxuczpleGlmPSJodHRwOi8vbnMuYWRvYmUuY29tL2V4aWYvMS4wLyI+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE2LTEwLTA4VDExOjMwOjA3KzA4OjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTYtMTAtMDhUMTE6NDQ6MDcrMDg6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE2LTEwLTA4VDExOjQ0OjA3KzA4OjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjQ2NWI3ZGVmLWI0NGUtMjQ0Mi04YzljLWQxNzVlZGI1ZjVjNzwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDo4MjlBNEZGQzhEMDcxMUU2QjM4MUZGOUU2MDA3QjQ3NzwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOkRlcml2ZWRGcm9tIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgPHN0UmVmOmluc3RhbmNlSUQ+eG1wLmlpZDo4MjlBNEZGOThEMDcxMUU2QjM4MUZGOUU2MDA3QjQ3Nzwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDo4MjlBNEZGQThEMDcxMUU2QjM4MUZGOUU2MDA3QjQ3Nzwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgPC94bXBNTTpEZXJpdmVkRnJvbT4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjgyOUE0RkZDOEQwNzExRTZCMzgxRkY5RTYwMDdCNDc3PC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo1YjcyY2ZhOC01N2FlLWU0NDgtYjZkYi03MzU4NzBjNGQyOTc8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTYtMTAtMDhUMTE6Mzk6MTcrMDg6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE0IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6NDY1YjdkZWYtYjQ0ZS0yNDQyLThjOWMtZDE3NWVkYjVmNWM3PC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE2LTEwLTA4VDExOjQ0OjA3KzA4OjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICA8L3JkZjpTZXE+CiAgICAgICAgIDwveG1wTU06SGlzdG9yeT4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9wbmc8L2RjOmZvcm1hdD4KICAgICAgICAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9wOkNvbG9yTW9kZT4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WVJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+NjU1MzU8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjk4PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjYwPC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz7QBjiVAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAEzSURBVHja7NuxTcNAHEbxd5ZFR0EG8QQsAJUHgBXooGMBWIGOHWCBrIMpjJTyKGJKBIEo9he917mxrP9P1t0VV2rfnQCPwBWwwg7ZO/AM3LbAA3DjTGbpbJr9ptS+e/NPmL2hEWERrRpnsIyEEMKEEMKEEMKEEMKEEMKEEMKEEMKEEMKEEMKEEMKEEMKEMCGEMCGEMCGEMCGEMCGOAWJwDLM3NGxvNdq8PbXAHVCAa7a3HO1wfV3vvS+175b6kafAC3C+p/etgUtgdLHerXEa3PrYERJ2TfvAWDxCyvb1PxgRCEnniL9gxCCkHeh2wYhCSDxZ/wYjDiER4ieMSIRUiO8wYhEA2uBT6QhcAK/TcyxCOgTAx4RRkhEASq0Vc40wIYQwIYQwIYQwIfL6BAAA//8DAI3OPfYMBUsuAAAAAElFTkSuQmCC", minPointImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGIAAAA8CAYAAACdIW+JAAAACXBIWXMAAAsTAAALEwEAmpwYAAA7WGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgICAgICAgICB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIgogICAgICAgICAgICB4bWxuczpleGlmPSJodHRwOi8vbnMuYWRvYmUuY29tL2V4aWYvMS4wLyI+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE2LTEwLTA4VDExOjMwOjA2KzA4OjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTYtMTAtMDhUMTE6NDQ6MDYrMDg6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE2LTEwLTA4VDExOjQ0OjA2KzA4OjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjM4M2Y1ZGFkLTFjYjgtZGQ0Yi05YTAwLWVlZjJkNjQzZGYwMjwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDo4MjFEQTQxOThEMDcxMUU2QkMzNkEzQTNDRTgxMURDRDwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOkRlcml2ZWRGcm9tIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgPHN0UmVmOmluc3RhbmNlSUQ+eG1wLmlpZDo4MjFEQTQxNjhEMDcxMUU2QkMzNkEzQTNDRTgxMURDRDwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDo4MjFEQTQxNzhEMDcxMUU2QkMzNkEzQTNDRTgxMURDRDwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgPC94bXBNTTpEZXJpdmVkRnJvbT4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjgyMURBNDE5OEQwNzExRTZCQzM2QTNBM0NFODExRENEPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDozZDcwNGYzZS1jYWE0LTY5NDQtOTEwOS0xZWExMTIzODkyM2E8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTYtMTAtMDhUMTE6Mzk6MTkrMDg6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE0IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6MzgzZjVkYWQtMWNiOC1kZDRiLTlhMDAtZWVmMmQ2NDNkZjAyPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE2LTEwLTA4VDExOjQ0OjA2KzA4OjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICA8L3JkZjpTZXE+CiAgICAgICAgIDwveG1wTU06SGlzdG9yeT4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9wbmc8L2RjOmZvcm1hdD4KICAgICAgICAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9wOkNvbG9yTW9kZT4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WVJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+NjU1MzU8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjk4PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjYwPC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz6HcNDqAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAE0SURBVHja7NuxTcNAHEbxd5ZFhywyDwvADLACHXQsACvQMYIlWCBjeAVM4UiUpogpEQSi2F/0XufGsv4/WXdXXGm69gR4BK6AFXbI3oFn4LYGHoAbZzJLZ9PsP0rTtW/+CbPXVyIsolXlDJaREEKYEEKYEEKYEEKYEEKYEEKYEEKYEEKYEEKYEEKYEEKYECaEECaEECaEECaEECbEMUD0jmH2+ortrUabt6cauAMKcM32lqMdrq/rvfel6dqlfuQp8AKc7+l9a+ASGFysd2uYBrc+doSEXdM+MBaPkLJ9/Q9GBELSOeIvGDEIaQe6XTCiEBJP1r/BiENIhPgJIxIhFeI7jFgEgDr4VDoAF8Dr9ByLkA4BsJkwSjICQBnHEXONMCGEMCGEMCGEMCHy+gQAAP//AwDZWD5ZNODTpgAAAABJRU5ErkJggg==";
+const PieChart = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$9]]), maxPointImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGIAAAA8CAYAAACdIW+JAAAACXBIWXMAAAsTAAALEwEAmpwYAAA7WGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgICAgICAgICB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIgogICAgICAgICAgICB4bWxuczpleGlmPSJodHRwOi8vbnMuYWRvYmUuY29tL2V4aWYvMS4wLyI+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE2LTEwLTA4VDExOjMwOjA3KzA4OjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTYtMTAtMDhUMTE6NDQ6MDcrMDg6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE2LTEwLTA4VDExOjQ0OjA3KzA4OjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjQ2NWI3ZGVmLWI0NGUtMjQ0Mi04YzljLWQxNzVlZGI1ZjVjNzwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDo4MjlBNEZGQzhEMDcxMUU2QjM4MUZGOUU2MDA3QjQ3NzwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOkRlcml2ZWRGcm9tIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgPHN0UmVmOmluc3RhbmNlSUQ+eG1wLmlpZDo4MjlBNEZGOThEMDcxMUU2QjM4MUZGOUU2MDA3QjQ3Nzwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDo4MjlBNEZGQThEMDcxMUU2QjM4MUZGOUU2MDA3QjQ3Nzwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgPC94bXBNTTpEZXJpdmVkRnJvbT4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjgyOUE0RkZDOEQwNzExRTZCMzgxRkY5RTYwMDdCNDc3PC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDo1YjcyY2ZhOC01N2FlLWU0NDgtYjZkYi03MzU4NzBjNGQyOTc8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTYtMTAtMDhUMTE6Mzk6MTcrMDg6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE0IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6NDY1YjdkZWYtYjQ0ZS0yNDQyLThjOWMtZDE3NWVkYjVmNWM3PC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE2LTEwLTA4VDExOjQ0OjA3KzA4OjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICA8L3JkZjpTZXE+CiAgICAgICAgIDwveG1wTU06SGlzdG9yeT4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9wbmc8L2RjOmZvcm1hdD4KICAgICAgICAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9wOkNvbG9yTW9kZT4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WVJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+NjU1MzU8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjk4PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjYwPC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz7QBjiVAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAEzSURBVHja7NuxTcNAHEbxd5ZFR0EG8QQsAJUHgBXooGMBWIGOHWCBrIMpjJTyKGJKBIEo9he917mxrP9P1t0VV2rfnQCPwBWwwg7ZO/AM3LbAA3DjTGbpbJr9ptS+e/NPmL2hEWERrRpnsIyEEMKEEMKEEMKEEMKEEMKEEMKEEMKEEMKEEMKEEMKEEMKEMCGEMCGEMCGEMCGEMCGOAWJwDLM3NGxvNdq8PbXAHVCAa7a3HO1wfV3vvS+175b6kafAC3C+p/etgUtgdLHerXEa3PrYERJ2TfvAWDxCyvb1PxgRCEnniL9gxCCkHeh2wYhCSDxZ/wYjDiER4ieMSIRUiO8wYhEA2uBT6QhcAK/TcyxCOgTAx4RRkhEASq0Vc40wIYQwIYQwIYQwIfL6BAAA//8DAI3OPfYMBUsuAAAAAElFTkSuQmCC", minPointImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGIAAAA8CAYAAACdIW+JAAAACXBIWXMAAAsTAAALEwEAmpwYAAA7WGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMjEgNzkuMTU1NzcyLCAyMDE0LzAxLzEzLTE5OjQ0OjAwICAgICAgICAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgICAgICAgICB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIKICAgICAgICAgICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgICAgICAgICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICAgICAgICAgICB4bWxuczpwaG90b3Nob3A9Imh0dHA6Ly9ucy5hZG9iZS5jb20vcGhvdG9zaG9wLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIgogICAgICAgICAgICB4bWxuczpleGlmPSJodHRwOi8vbnMuYWRvYmUuY29tL2V4aWYvMS4wLyI+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+QWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpPC94bXA6Q3JlYXRvclRvb2w+CiAgICAgICAgIDx4bXA6Q3JlYXRlRGF0ZT4yMDE2LTEwLTA4VDExOjMwOjA2KzA4OjAwPC94bXA6Q3JlYXRlRGF0ZT4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTYtMTAtMDhUMTE6NDQ6MDYrMDg6MDA8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8eG1wOk1ldGFkYXRhRGF0ZT4yMDE2LTEwLTA4VDExOjQ0OjA2KzA4OjAwPC94bXA6TWV0YWRhdGFEYXRlPgogICAgICAgICA8eG1wTU06SW5zdGFuY2VJRD54bXAuaWlkOjM4M2Y1ZGFkLTFjYjgtZGQ0Yi05YTAwLWVlZjJkNjQzZGYwMjwveG1wTU06SW5zdGFuY2VJRD4KICAgICAgICAgPHhtcE1NOkRvY3VtZW50SUQ+eG1wLmRpZDo4MjFEQTQxOThEMDcxMUU2QkMzNkEzQTNDRTgxMURDRDwveG1wTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhtcE1NOkRlcml2ZWRGcm9tIHJkZjpwYXJzZVR5cGU9IlJlc291cmNlIj4KICAgICAgICAgICAgPHN0UmVmOmluc3RhbmNlSUQ+eG1wLmlpZDo4MjFEQTQxNjhEMDcxMUU2QkMzNkEzQTNDRTgxMURDRDwvc3RSZWY6aW5zdGFuY2VJRD4KICAgICAgICAgICAgPHN0UmVmOmRvY3VtZW50SUQ+eG1wLmRpZDo4MjFEQTQxNzhEMDcxMUU2QkMzNkEzQTNDRTgxMURDRDwvc3RSZWY6ZG9jdW1lbnRJRD4KICAgICAgICAgPC94bXBNTTpEZXJpdmVkRnJvbT4KICAgICAgICAgPHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD54bXAuZGlkOjgyMURBNDE5OEQwNzExRTZCQzM2QTNBM0NFODExRENEPC94bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ+CiAgICAgICAgIDx4bXBNTTpIaXN0b3J5PgogICAgICAgICAgICA8cmRmOlNlcT4KICAgICAgICAgICAgICAgPHJkZjpsaSByZGY6cGFyc2VUeXBlPSJSZXNvdXJjZSI+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDphY3Rpb24+c2F2ZWQ8L3N0RXZ0OmFjdGlvbj4KICAgICAgICAgICAgICAgICAgPHN0RXZ0Omluc3RhbmNlSUQ+eG1wLmlpZDozZDcwNGYzZS1jYWE0LTY5NDQtOTEwOS0xZWExMTIzODkyM2E8L3N0RXZ0Omluc3RhbmNlSUQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDp3aGVuPjIwMTYtMTAtMDhUMTE6Mzk6MTkrMDg6MDA8L3N0RXZ0OndoZW4+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpzb2Z0d2FyZUFnZW50PkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE0IChXaW5kb3dzKTwvc3RFdnQ6c29mdHdhcmVBZ2VudD4KICAgICAgICAgICAgICAgICAgPHN0RXZ0OmNoYW5nZWQ+Lzwvc3RFdnQ6Y2hhbmdlZD4KICAgICAgICAgICAgICAgPC9yZGY6bGk+CiAgICAgICAgICAgICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0iUmVzb3VyY2UiPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6YWN0aW9uPnNhdmVkPC9zdEV2dDphY3Rpb24+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDppbnN0YW5jZUlEPnhtcC5paWQ6MzgzZjVkYWQtMWNiOC1kZDRiLTlhMDAtZWVmMmQ2NDNkZjAyPC9zdEV2dDppbnN0YW5jZUlEPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6d2hlbj4yMDE2LTEwLTA4VDExOjQ0OjA2KzA4OjAwPC9zdEV2dDp3aGVuPgogICAgICAgICAgICAgICAgICA8c3RFdnQ6c29mdHdhcmVBZ2VudD5BZG9iZSBQaG90b3Nob3AgQ0MgMjAxNCAoV2luZG93cyk8L3N0RXZ0OnNvZnR3YXJlQWdlbnQ+CiAgICAgICAgICAgICAgICAgIDxzdEV2dDpjaGFuZ2VkPi88L3N0RXZ0OmNoYW5nZWQ+CiAgICAgICAgICAgICAgIDwvcmRmOmxpPgogICAgICAgICAgICA8L3JkZjpTZXE+CiAgICAgICAgIDwveG1wTU06SGlzdG9yeT4KICAgICAgICAgPGRjOmZvcm1hdD5pbWFnZS9wbmc8L2RjOmZvcm1hdD4KICAgICAgICAgPHBob3Rvc2hvcDpDb2xvck1vZGU+MzwvcGhvdG9zaG9wOkNvbG9yTW9kZT4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzIwMDAwLzEwMDAwPC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjAwMDAvMTAwMDA8L3RpZmY6WVJlc29sdXRpb24+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+NjU1MzU8L2V4aWY6Q29sb3JTcGFjZT4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjk4PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxZRGltZW5zaW9uPjYwPC9leGlmOlBpeGVsWURpbWVuc2lvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz6HcNDqAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAE0SURBVHja7NuxTcNAHEbxd5ZFhywyDwvADLACHXQsACvQMYIlWCBjeAVM4UiUpogpEQSi2F/0XufGsv4/WXdXXGm69gR4BK6AFXbI3oFn4LYGHoAbZzJLZ9PsP0rTtW/+CbPXVyIsolXlDJaREEKYEEKYEEKYEEKYEEKYEEKYEEKYEEKYEEKYEEKYEEKYECaEECaEECaEECaEECbEMUD0jmH2+ortrUabt6cauAMKcM32lqMdrq/rvfel6dqlfuQp8AKc7+l9a+ASGFysd2uYBrc+doSEXdM+MBaPkLJ9/Q9GBELSOeIvGDEIaQe6XTCiEBJP1r/BiENIhPgJIxIhFeI7jFgEgDr4VDoAF8Dr9ByLkA4BsJkwSjICQBnHEXONMCGEMCGEMCGEMCHy+gQAAP//AwDZWD5ZNODTpgAAAABJRU5ErkJggg==";
 let barLineChart = null;
-const _sfc_main$6 = defineComponent({
+const _sfc_main$8 = defineComponent({
   name: "BarLineChart",
   props: {
     option: {
@@ -68209,18 +68412,18 @@ const _sfc_main$6 = defineComponent({
       !this.flagClickEvent && opts.clickEvent && (this.flagClickEvent = !0, barLineChart.on("click", opts.clickEvent)), toolUtil.extend(barLineOption, opts.optionBarLine), barLineChart.setOption(barLineOption, !0);
     }
   }
-}), _hoisted_1$5 = {
+}), _hoisted_1$7 = {
   ref: "domChart",
   style: { height: "100%", width: "100%" }
-}, _hoisted_2$4 = { style: { display: "none" } };
-function _sfc_render$6(H, C, G, U, K, W) {
-  return openBlock(), createElementBlock("div", _hoisted_1$5, [
-    createElementVNode("span", _hoisted_2$4, toDisplayString(H.option.type), 1)
+}, _hoisted_2$6 = { style: { display: "none" } };
+function _sfc_render$8(H, C, G, U, K, W) {
+  return openBlock(), createElementBlock("div", _hoisted_1$7, [
+    createElementVNode("span", _hoisted_2$6, toDisplayString(H.option.type), 1)
   ], 512);
 }
-const BarLineChart = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$6]]);
+const BarLineChart = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$8]]);
 let lineChart = null;
-const _sfc_main$5 = defineComponent({
+const _sfc_main$7 = defineComponent({
   name: "LineChart",
   props: {
     option: {
@@ -68396,18 +68599,18 @@ const _sfc_main$5 = defineComponent({
       toolUtil.extend(optionLine, opts.optionLine), lineChart.setOption(optionLine, !0);
     }
   }
-}), _hoisted_1$4 = {
+}), _hoisted_1$6 = {
   ref: "domChart",
   style: { height: "100%", width: "100%" }
-}, _hoisted_2$3 = { style: { display: "none" } };
-function _sfc_render$5(H, C, G, U, K, W) {
-  return openBlock(), createElementBlock("div", _hoisted_1$4, [
-    createElementVNode("span", _hoisted_2$3, toDisplayString(H.option.type), 1)
+}, _hoisted_2$5 = { style: { display: "none" } };
+function _sfc_render$7(H, C, G, U, K, W) {
+  return openBlock(), createElementBlock("div", _hoisted_1$6, [
+    createElementVNode("span", _hoisted_2$5, toDisplayString(H.option.type), 1)
   ], 512);
 }
-const LineChart = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$5]]);
+const LineChart = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$7]]);
 let linesChart = null;
-const _sfc_main$4 = defineComponent({
+const _sfc_main$6 = defineComponent({
   name: "LinesChart",
   props: {
     option: {
@@ -68669,18 +68872,18 @@ const _sfc_main$4 = defineComponent({
       !this.flagClickEvent && opts.clickEvent && (this.flagClickEvent = !0, linesChart.on("click", opts.clickEvent)), toolUtil.extend(optionLines, opts.optionLines), linesChart.setOption(optionLines, !0);
     }
   }
-}), _hoisted_1$3 = {
+}), _hoisted_1$5 = {
   ref: "domChart",
   style: { height: "100%", width: "100%" }
-}, _hoisted_2$2 = { style: { display: "none" } };
-function _sfc_render$4(H, C, G, U, K, W) {
-  return openBlock(), createElementBlock("div", _hoisted_1$3, [
-    createElementVNode("span", _hoisted_2$2, toDisplayString(H.option.type), 1)
+}, _hoisted_2$4 = { style: { display: "none" } };
+function _sfc_render$6(H, C, G, U, K, W) {
+  return openBlock(), createElementBlock("div", _hoisted_1$5, [
+    createElementVNode("span", _hoisted_2$4, toDisplayString(H.option.type), 1)
   ], 512);
 }
-const LinesChart = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$4]]);
+const LinesChart = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$6]]);
 let radarChart = null;
-const _sfc_main$3 = defineComponent({
+const _sfc_main$5 = defineComponent({
   name: "RadarChart",
   props: {
     option: {
@@ -68822,6 +69025,693 @@ const _sfc_main$3 = defineComponent({
       toolUtil.extend(optionRadar, opts.optionRadar), radarChart.setOption(optionRadar, !0);
     }
   }
+}), _hoisted_1$4 = {
+  ref: "domChart",
+  style: { height: "100%", width: "100%" }
+}, _hoisted_2$3 = { style: { display: "none" } };
+function _sfc_render$5(H, C, G, U, K, W) {
+  return openBlock(), createElementBlock("div", _hoisted_1$4, [
+    createElementVNode("span", _hoisted_2$3, toDisplayString(H.option.type), 1)
+  ], 512);
+}
+const RadarChart = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$5]]);
+let pieBarChart = null;
+const _sfc_main$4 = defineComponent({
+  name: "PieBarChart",
+  props: {
+    option: {
+      type: Object,
+      default: () => {
+      }
+    }
+  },
+  data() {
+    return {
+      flagClickEvent: !1,
+      defaultOption: toolUtil.extend({}, defaultConfig.pieBar.option)
+    };
+  },
+  created() {
+  },
+  mounted() {
+    this.option && (pieBarChart = init$1(
+      this.$refs.domChart,
+      this.option.theme === "dark" ? dark : light
+    ), this.setPieBarOption(this.option), window.addEventListener("resize", this.onWindowResize));
+  },
+  updated() {
+    this.setPieBarOption(this.option), pieBarChart.resize();
+  },
+  beforeUnmount() {
+    pieBarChart && (pieBarChart.clear(), pieBarChart.dispose()), window.removeEventListener("resize", this.onWindowResize);
+  },
+  methods: {
+    onWindowResize() {
+      pieBarChart.resize();
+    },
+    setPieBarOption(option) {
+      const opts = toolUtil.merge(this.defaultOption, option, !0), pieBarOptionV = {
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "none"
+          },
+          formatter(params, ticket, callback) {
+            if (option.toolTipFormatter)
+              return eval(option.toolTipFormatter).call(
+                this,
+                params,
+                ticket,
+                callback
+              );
+            let res = params[0].name;
+            for (let H = 0, C = params.length; H < C; H++)
+              res += `<br/>${params[H].seriesName} : ${toolUtil.commafy(
+                params[H].value
+              )}`;
+            return res;
+          }
+        },
+        title: {
+          x: "center",
+          y: 10,
+          /* textStyle: {
+                  fontSize: 12,
+                  color: '#fff'
+              }, */
+          text: opts.title
+        },
+        legend: {
+          show: opts.legendShow,
+          left: opts.legendLeft,
+          top: opts.legendTop,
+          orient: opts.orient,
+          itemHeight: 8,
+          padding: 10,
+          itemGap: 10,
+          formatter(params) {
+            return opts.legendFormatter ? eval(opts.legendFormatter).call(this, params) : toolUtil.formatCharts(params, 22);
+          },
+          pageIconInactiveColor: "#2f4554",
+          pageIconColor: "#aaa",
+          pageTextStyle: {
+            color: "#aaa"
+          },
+          /* textStyle: {
+            color: "#fff",
+            fontFamily: "SimHei,Arial, Verdana, sans-serif",
+            fontSize: 12
+          }, */
+          data: []
+        },
+        grid: {
+          left: opts.gridLeft,
+          right: opts.gridRight,
+          top: opts.gridTop,
+          bottom: opts.gridBottom,
+          containLabel: !0
+        },
+        xAxis: [
+          {
+            type: "value",
+            data: [],
+            axisLabel: {
+              rotate: opts.xRotate,
+              formatter(value, index) {
+                return option.xAxisFormatter ? eval(option.xAxisFormatter).call(this, value, index) : toolUtil.commafy(value);
+              },
+              // color: opts.xAxisLabelColor,
+              fontSize: 12
+            },
+            nameTextStyle: {
+              // color: '#ffffff',
+              fontSize: 12
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: "category",
+            name: opts.yAxisName,
+            splitLine: {
+              show: !1
+            },
+            data: [],
+            axisLabel: {
+              interval: 0,
+              rotate: opts.yRotate,
+              formatter(value, index) {
+                return option.yAxisFormatter ? eval(option.yAxisFormatter).call(this, value, index) : toolUtil.formatCharts(value, 18);
+              },
+              fontSize: 12
+            },
+            nameTextStyle: {
+              fontSize: 12
+            }
+          }
+        ],
+        series: [
+          {
+            name: "柱状图",
+            type: "bar",
+            barCategoryGap: "50%",
+            barMinHeight: 5,
+            barMaxWidth: 30,
+            itemStyle: {
+              color: ""
+            },
+            label: {
+              show: !0,
+              position: "right",
+              formatter(param) {
+                return option.labelFormatter ? eval(option.labelFormatter).call(this, param) : toolUtil.commafy(param.value);
+              },
+              fontSize: 12
+              // color: '#fff',
+            },
+            data: []
+          }
+        ]
+      }, pieBarOptionH = {
+        tooltip: {
+          show: !0,
+          trigger: "axis",
+          axisPointer: {
+            type: "none"
+          },
+          formatter: (params, ticket, callback) => {
+            if (option.toolTipFormatter)
+              return eval(option.toolTipFormatter).call(
+                this,
+                params,
+                ticket,
+                callback
+              );
+            let res = params[0].name;
+            for (let H = 0, C = params.length; H < C; H++)
+              res += `<br/>${params[H].seriesName} : ${toolUtil.commafy(
+                params[H].value
+              )}`;
+            return res;
+          }
+        },
+        title: {
+          x: "center",
+          y: 10,
+          /* textStyle: {
+            fontSize: 14,
+            color: '#fff'
+          }, */
+          text: opts.title
+        },
+        legend: {
+          show: opts.legendShow,
+          left: opts.legendLeft,
+          top: opts.legendTop,
+          orient: opts.orient,
+          selected: {},
+          itemHeight: 8,
+          padding: 10,
+          itemGap: 10,
+          formatter(params) {
+            return opts.legendFormatter ? eval(opts.legendFormatter).call(this, params) : toolUtil.formatCharts(params, 22);
+          },
+          // pageIconInactiveColor: '#2f4554',
+          // pageIconColor: '#aaa',
+          pageTextStyle: {
+            // color: '#aaa',
+          },
+          /* textStyle: {
+            color: "#fff",
+            fontFamily: "SimHei,Arial, Verdana, sans-serif",
+            fontSize: 12
+          }, */
+          data: []
+        },
+        grid: {
+          left: opts.gridLeft,
+          right: opts.gridRight,
+          top: opts.gridTop,
+          bottom: opts.gridBottom
+        },
+        xAxis: [
+          {
+            show: !0,
+            type: "category",
+            data: [],
+            axisLabel: {
+              rotate: opts.xRotate,
+              formatter(value, index) {
+                return option.xAxisFormatter ? eval(option.xAxisFormatter).call(this, value, index) : toolUtil.formatCharts(value, 12);
+              },
+              // color: opts.xAxisLabelColor,
+              fontSize: 12
+            },
+            splitLine: {
+              show: !1
+            },
+            nameTextStyle: {
+              // color: '#ffffff',
+              fontSize: 12
+            }
+          }
+        ],
+        yAxis: [
+          {
+            show: !0,
+            type: "value",
+            data: [],
+            name: opts.yAxisName,
+            axisLabel: {
+              interval: 0,
+              rotate: opts.yRotate,
+              formatter(value, index) {
+                return option.yAxisFormatter ? eval(option.yAxisFormatter).call(this, value, index) : toolUtil.commafy(value);
+              },
+              // color: opts.yAxisLabelColor,
+              fontSize: 12
+            },
+            nameTextStyle: {
+              // color: '#ffffff',
+              fontSize: 12
+            }
+          }
+        ],
+        series: [
+          {
+            name: "柱状图",
+            type: "bar",
+            barGap: "0%",
+            barCategoryGap: "50%",
+            // barMinHeight: 5,
+            barMaxWidth: 30,
+            label: {
+              show: !0,
+              position: "top",
+              formatter(param) {
+                return option.labelFormatter ? eval(option.labelFormatter).call(this, param) : toolUtil.commafy(param.value);
+              },
+              fontSize: 12
+              // color: '#fff',
+            },
+            itemStyle: {
+              // color: '',
+            },
+            data: []
+          }
+        ]
+      }, pieBarOption = opts.barType === "vertical" ? toolUtil.extend({}, pieBarOptionV, opts.optionBar) : toolUtil.extend({}, pieBarOptionH, opts.optionBar), { data } = opts;
+      if (data && data.length > 0) {
+        pieBarOption.yAxis[0].data = [], pieBarOption.xAxis[0].data = [], pieBarOption.series[0].data = [], opts.resetOrder && data.sort((C, G) => C[opts.keyName] - G[opts.keyName]);
+        const H = opts.valueName;
+        if (H.length > 1 && H.forEach((C, G) => {
+          pieBarOption.series[G] = toolUtil.extend({}, pieBarOption.series[0]), pieBarOption.series[G].data = [], opts.name.length > 1 && opts.name[G] && (pieBarOption.series[G].name = opts.name[G]);
+        }), opts.name.forEach((C, G) => {
+          pieBarOption.legend.data.push({
+            name: opts.name[G],
+            icon: "circle"
+          });
+        }), pieBarOption.yAxis.length > 1 && pieBarOption.yAxis.forEach((C, G) => {
+          pieBarOption.series[G].yAxisIndex = G;
+        }), data.forEach((C, G) => {
+          const U = C[opts.keyName];
+          opts.barType === "vertical" ? pieBarOption.yAxis[0].data.push(U) : pieBarOption.xAxis[0].data.push(U), H.length >= 1 && H.forEach((K, W) => {
+            opts.lastDotted && G === data.length - 1 ? pieBarOption.series[W].data.push({
+              value: C[K],
+              itemStyle: {
+                borderColor: opts.barColor[W % H.length],
+                borderType: "dotted",
+                borderWidth: "3",
+                color: "rgba(0,0,0,0.07)"
+              },
+              originalData: C
+            }) : pieBarOption.series[W].data.push(C[K]);
+          });
+        }), pieBarOption.series.forEach((C) => {
+          opts.overlap && (C.stack = "总量"), opts.label || (C.label.show = !1);
+        }), opts.name.length >= 1 && pieBarOption.series.forEach((C, G) => {
+          pieBarOption.series[G].name = opts.name[G];
+        }), opts.name.length >= 1 && pieBarOption.series.forEach((C, G) => {
+          pieBarOption.series[G].itemStyle.color = opts.barColor[G];
+        }), opts.defaultLegend instanceof Array && opts.defaultLegend.length > 0)
+          opts.defaultLegend.forEach((C) => {
+            pieBarOption.legend.selected[C] = !0;
+          });
+        else
+          for (const C in pieBarOption.legend.selected)
+            pieBarOption.legend.selected[C] = !0;
+      } else
+        pieBarOption.xAxis[0].show = !1, pieBarOption.yAxis[0].show = !1, pieBarOption.series = [];
+      let pieData = [];
+      opts.valueName.forEach((H, C) => {
+        let G = data[0];
+        pieData.push({
+          value: G[H],
+          name: opts.name[C],
+          itemStyle: {
+            color: opts.barColor[C % opts.valueName.length]
+          }
+        });
+      }), pieBarOption.series[opts.valueName.length] = {
+        name: "饼图",
+        type: "pie",
+        id: "pie",
+        radius: opts.pieRadius,
+        center: opts.pieCenter,
+        label: {
+          formatter: "{b}: {c} ({d}%)"
+        },
+        data: pieData
+      }, pieBarChart.on("updateAxisPointer", function(H) {
+        const C = H.axesInfo[0];
+        if (C) {
+          let G = [];
+          const U = C.value;
+          opts.valueName.forEach((K, W) => {
+            let Z = data[U];
+            G.push({
+              value: Z[K],
+              name: opts.name[W],
+              itemStyle: {
+                color: opts.barColor[W % opts.valueName.length]
+              }
+            });
+          }), pieBarChart.setOption({
+            series: {
+              id: "pie",
+              data: G
+            }
+          });
+        }
+      }), toolUtil.extend(pieBarOption, opts.pieBarOption), pieBarChart.setOption(pieBarOption, !0);
+    }
+  }
+}), _hoisted_1$3 = {
+  ref: "domChart",
+  style: { height: "100%", width: "100%" }
+}, _hoisted_2$2 = { style: { display: "none" } };
+function _sfc_render$4(H, C, G, U, K, W) {
+  return openBlock(), createElementBlock("div", _hoisted_1$3, [
+    createElementVNode("span", _hoisted_2$2, toDisplayString(H.option.type), 1)
+  ], 512);
+}
+const PieBarChart = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$4]]);
+let pieLinesChart = null;
+const _sfc_main$3 = defineComponent({
+  name: "PieLinesChart",
+  props: {
+    option: {
+      type: Object,
+      default: () => {
+      }
+    }
+  },
+  data() {
+    return {
+      flagClickEvent: !1,
+      defaultOption: toolUtil.extend({}, defaultConfig.pieLines.option)
+    };
+  },
+  created() {
+  },
+  mounted() {
+    this.option && (pieLinesChart = init$1(
+      this.$refs.domChart,
+      this.option.theme === "dark" ? dark : light
+    ), this.setPieLinesOption(this.option), window.addEventListener("resize", this.onWindowResize));
+  },
+  updated() {
+    this.setPieLinesOption(this.option), pieLinesChart.resize();
+  },
+  beforeUnmount() {
+    pieLinesChart && (pieLinesChart.clear(), pieLinesChart.dispose()), window.removeEventListener("resize", this.onWindowResize);
+  },
+  methods: {
+    onWindowResize() {
+      pieLinesChart.resize();
+    },
+    setPieLinesOption(option) {
+      const opts = toolUtil.merge(this.defaultOption, option, !0), optionPieLines = {
+        tooltip: {
+          trigger: "axis",
+          formatter(params, ticket, callback) {
+            if (opts.toolTipFormatter)
+              return eval(opts.toolTipFormatter).call(
+                this,
+                params,
+                ticket,
+                callback
+              );
+            if (opts.lastDotted) {
+              const H = params[0].axisValue;
+              return params = params.filter((C) => C.value !== "_"), params = params.sort((C, G) => G.value - C.value), H;
+            }
+            params = params.sort((H, C) => C.value - H.value);
+            let res = params[0].name;
+            for (let H = 0, C = params.length; H < C; H++)
+              res += `<br/>${params[H].seriesName} : ${toolUtil.commafy(
+                params[H].value
+              )}`;
+            return res;
+          }
+        },
+        title: {
+          text: opts.title,
+          left: "center",
+          /* textStyle: {
+                         fontSize: "14",
+                         color: "white"
+                         }, */
+          top: 5
+        },
+        grid: {
+          left: opts.gridLeft,
+          right: opts.gridRight,
+          top: opts.gridTop,
+          bottom: opts.gridBottom
+        },
+        legend: {
+          show: opts.legendShow,
+          left: opts.legendLeft,
+          top: opts.legendTop,
+          orient: opts.orient,
+          selected: {},
+          itemHeight: 8,
+          padding: 10,
+          itemGap: 10,
+          formatter(params) {
+            return opts.legendFormatter ? eval(opts.legendFormatter).call(this, params) : toolUtil.formatCharts(params, 22);
+          },
+          // pageIconInactiveColor: '#2f4554',
+          // pageIconColor: '#aaa',
+          pageTextStyle: {
+            // color: '#aaa',
+          },
+          /* textStyle: {
+                         color: "#666666",
+                         fontFamily: "SimHei,Arial, Verdana, sans-serif",
+                         fontSize: 12
+                         }, */
+          data: []
+        },
+        xAxis: [
+          {
+            show: !0,
+            type: "category",
+            boundaryGap: !1,
+            data: [],
+            axisLabel: {
+              // color: opts.xAxisLabelColor,
+              rotate: opts.xRotate,
+              formatter(value) {
+                return opts.xAxisFormatter ? eval(opts.xAxisFormatter).call(this, value) : `${value.substr(0, 4)}/${value.substr(4, 2)}`;
+              }
+            }
+          }
+        ],
+        yAxis: [
+          {
+            show: !0,
+            type: "value",
+            name: opts.y1AxisName,
+            axisLabel: {
+              interval: 0,
+              // color: opts.y1AxisLabelColor,
+              rotate: opts.y1Rotate,
+              formatter(value) {
+                return opts.yAxisFormatter ? opts.yAxisFormatter(value) : opts.y1AxisFormatter ? eval(opts.y1AxisFormatter).call(this, value) : toolUtil.commafy(value);
+              }
+            }
+            /* nameTextStyle: {
+                             color: "#000",
+                             fontSize: 12
+                             } */
+          },
+          {
+            type: "value",
+            name: opts.y2AxisName,
+            show: opts.enableDoubleYAxis,
+            axisLabel: {
+              show: !0,
+              interval: 0,
+              // color: opts.y2AxisLabelColor,
+              rotate: opts.y2Rotate,
+              formatter(value) {
+                return opts.yAxisFormatter ? opts.yAxisFormatter(value) : opts.y2AxisFormatter ? eval(opts.y2AxisFormatter).call(this, value) : toolUtil.commafy(value);
+              }
+            },
+            /* nameTextStyle: {
+                             color: "#ffffff",
+                             fontSize: 12
+                             }, */
+            axisLine: {
+              show: opts.enableDoubleYAxis
+            }
+          }
+        ],
+        series: [],
+        dataZoom: opts.showDataZoom ? toolUtil.extend(
+          !0,
+          [
+            {
+              type: "slider",
+              show: !0,
+              height: 6,
+              bottom: 4,
+              handleColor: "#2b85ff",
+              dataBackgroundColor: "rgba(0,0,0,0)",
+              backgroundColor: "#e5e5e5",
+              fillerColor: "#2b85ff",
+              handleIcon: "image:///images/datazoom-dot.png",
+              handleSize: "200%",
+              color: "#2b85ff",
+              start: opts.dataZoomStart || 50,
+              end: opts.dataZoomEnd || 100
+            }
+          ],
+          opts.showDataZoom
+        ) : [{ type: "slider", show: !1 }]
+      };
+      opts.enableDoubleYAxis;
+      const keyNameMap = {};
+      opts.keys.forEach((H, C) => {
+        keyNameMap[H] = opts.names[C];
+      });
+      const tempData = opts.data, seriesData = [], legendData = [], legendSelected = {};
+      let xAxisData = [];
+      const xAxisSet = /* @__PURE__ */ new Set(), y1Keys = new Set(opts.y1Keys || []), y2Keys = new Set(opts.y2Keys || []), value = {}, data = [];
+      if (tempData && tempData.length > 0) {
+        for (const H in keyNameMap)
+          value[H] = [], tempData.forEach((C) => {
+            xAxisSet.add(C[opts.keyName] || C.key), value[H].push(C[H]);
+          });
+        xAxisData = Array.from(xAxisSet);
+        for (const H in value)
+          data.push({
+            name: keyNameMap[H],
+            key: xAxisData,
+            value: value[H],
+            yName: y1Keys.has(H) ? opts.y1AxisName : y2Keys.has(H) ? opts.y2AxisName : ""
+          });
+      }
+      if (data && data.length > 0) {
+        if (opts.resetOrder && (xAxisData = xAxisData.sort()), data.forEach((H, C) => {
+          const G = {
+            type: "line",
+            symbol: "emptyCircle",
+            smooth: "true",
+            data: [],
+            name: H.name,
+            yName: H.yName
+            // fix bug by rjh:多折线双Y轴，optionPieLines.doubleYAxis里面的name（用于显示在y轴上面的文字）与data里面name不一致的情况时无法显示双Y轴
+          };
+          opts.isAreaStyle ? G.itemStyle = {
+            color: opts.colorList[C],
+            areaStyle: {
+              type: "default"
+            }
+          } : G.itemStyle = {
+            color: opts.colorList[C]
+          };
+          let U = [];
+          if (xAxisData.toString() !== H.key.toString()) {
+            U.length = xAxisData.length;
+            const { value: K } = H;
+            H.key.forEach((W, Z) => {
+              for (const X in xAxisData)
+                xAxisData[X] === W.toString() ? U[X] = K[Z] : U[X] || (U[X] = 0);
+            });
+          } else
+            U = H.value;
+          if (opts.enableDoubleYAxis && optionPieLines.yAxis.forEach((K, W) => K.name === G.name || K.name === G.yName ? (G.yAxisIndex = W, !1) : !0), opts.lastDotted) {
+            const K = toolUtil.extend({}, G);
+            K.lineStyle = {
+              width: 2,
+              color: opts.colorList[C],
+              type: "dotted"
+            }, U.forEach((W, Z) => {
+              const X = W.toString();
+              Z > U.length - 3 ? K.data.push(X) : K.data.push("_"), Z < U.length - 1 ? G.data.push(X) : G.data.push("_");
+            }), seriesData.push(K);
+          } else
+            G.data = U;
+          seriesData.push(G), legendData.push({ name: G.name, icon: "circle" }), legendSelected[G.name] = !1;
+        }), seriesData.length > 0 && seriesData[0].data.length <= 1 ? (optionPieLines.xAxis[0].boundaryGap = !0, seriesData.forEach((H) => {
+          H.symbolSize = 2;
+        })) : optionPieLines.xAxis[0].boundaryGap = !1, optionPieLines.legend.data = legendData, data.length > 0 && (optionPieLines.xAxis[0].data = xAxisData), optionPieLines.series = seriesData, opts.defaultLegend instanceof Array && opts.defaultLegend.length > 0)
+          opts.defaultLegend.forEach((H) => {
+            legendSelected[H] = !0;
+          });
+        else
+          for (const H in legendSelected)
+            legendSelected[H] = !0;
+        optionPieLines.legend.selected = legendSelected;
+      } else
+        optionPieLines.xAxis[0].show = !1, optionPieLines.yAxis[0].show = !1, optionPieLines.dataZoom[0].show = !1, optionPieLines.series = [];
+      let pieData = [];
+      opts.keys.forEach((H, C, G) => {
+        let U = opts.data[0];
+        pieData.push({
+          value: U[H],
+          name: opts.names[C],
+          itemStyle: {
+            color: opts.colorList[C % G.length]
+          }
+        });
+      }), optionPieLines.series[opts.keys.length] = {
+        name: "饼图",
+        type: "pie",
+        id: "pie",
+        radius: opts.pieRadius,
+        center: opts.pieCenter,
+        label: {
+          formatter: "{b}: {c} ({d}%)"
+        },
+        data: pieData
+      }, pieLinesChart.on("updateAxisPointer", function(H) {
+        const C = H.axesInfo[0];
+        if (C) {
+          let G = [];
+          const U = C.value;
+          opts.keys.forEach((K, W, Z) => {
+            let X = opts.data[U];
+            G.push({
+              value: X[K],
+              name: opts.names[W],
+              itemStyle: {
+                color: opts.colorList[W % Z.length]
+              }
+            });
+          }), pieLinesChart.setOption({
+            series: {
+              id: "pie",
+              data: G
+            }
+          });
+        }
+      }), toolUtil.extend(optionPieLines, opts.optionPieLines), pieLinesChart.setOption(optionPieLines, !0);
+    }
+  }
 }), _hoisted_1$2 = {
   ref: "domChart",
   style: { height: "100%", width: "100%" }
@@ -68831,7 +69721,7 @@ function _sfc_render$3(H, C, G, U, K, W) {
     createElementVNode("span", _hoisted_2$1, toDisplayString(H.option.type), 1)
   ], 512);
 }
-const RadarChart = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$3]]), index$2 = "", _sfc_main$2 = defineComponent({
+const PieLinesChart = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$3]]), index$2 = "", _sfc_main$2 = defineComponent({
   name: "VueChart",
   components: {
     NoData,
@@ -68840,7 +69730,9 @@ const RadarChart = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_ren
     PieChart,
     LineChart,
     LinesChart,
-    RadarChart
+    RadarChart,
+    PieBarChart,
+    PieLinesChart
   },
   props: {
     type: {
@@ -68857,7 +69749,7 @@ const RadarChart = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_ren
   }
 }), _hoisted_1$1 = { class: "vue-chart-wrapper" };
 function _sfc_render$2(H, C, G, U, K, W) {
-  const Z = resolveComponent("bar-chart"), X = resolveComponent("pie-chart"), Q = resolveComponent("bar-line-chart"), ee = resolveComponent("line-chart"), te = resolveComponent("lines-chart"), re = resolveComponent("radar-chart"), ne = resolveComponent("no-data");
+  const Z = resolveComponent("bar-chart"), X = resolveComponent("pie-chart"), Q = resolveComponent("bar-line-chart"), ee = resolveComponent("line-chart"), te = resolveComponent("lines-chart"), re = resolveComponent("radar-chart"), ne = resolveComponent("pie-bar-chart"), ae = resolveComponent("pie-lines-chart"), ie = resolveComponent("no-data");
   return openBlock(), createElementBlock("div", _hoisted_1$1, [
     H.type === "bar" ? (openBlock(), createBlock(Z, {
       key: 0,
@@ -68877,7 +69769,13 @@ function _sfc_render$2(H, C, G, U, K, W) {
     }, null, 8, ["option"])) : H.type === "radar" ? (openBlock(), createBlock(re, {
       key: 5,
       option: H.option
-    }, null, 8, ["option"])) : (openBlock(), createBlock(ne, { key: 6 }))
+    }, null, 8, ["option"])) : H.type === "pieBar" ? (openBlock(), createBlock(ne, {
+      key: 6,
+      option: H.option
+    }, null, 8, ["option"])) : H.type === "pieLines" ? (openBlock(), createBlock(ae, {
+      key: 7,
+      option: H.option
+    }, null, 8, ["option"])) : (openBlock(), createBlock(ie, { key: 8 }))
   ]);
 }
 const VueChart = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$2]]), index$1 = "", _sfc_main$1 = defineComponent({
