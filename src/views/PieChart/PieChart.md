@@ -1,4 +1,5 @@
 [comment]: <> (2021/12/30 gqd 新增README文档;)
+[comment]: <> (2023/09/18 gqd 增加配置项centerLabel;)
 
 # 饼图组件
 
@@ -29,6 +30,7 @@
 | valueName | 数据的索引 | string | 'value' | - | - |
 | orient | 图例列表的布局朝向 | string | 'horizontal' | - | legend.orient |
 | legendShow | 图例是否显示 | boolean | true | - | legend.show |
+| centerLabel | 是否在中心展示label | boolean | false | - | label.position: 'center' |
 | legendAlign | 图例布局 | string | 'left' | - | legend.align |
 | legendLeft | 图例组件离容器左侧的距离 | string | 'center' | - | legend.left |
 | legendTop | 图例组件离容器上侧的距离 | string | '20px' | - | legend.top |
