@@ -106,36 +106,32 @@ export default defineComponent({
               normal: {},
             },
             roseType: opts.roseType === 'false' ? false : opts.roseType,
+            avoidLabelOverlap: !opts.centerLabel,
             labelLine: {
-              normal: {
-                show: true,
-                /* lineStyle: {
-                                    color: opts.labelLineColor?opts.labelLineColor:''
-                                }, */
-                length: 30,
-              },
+              show: !opts.centerLabel,
             },
             label: {
-              normal: {
-                show: true,
-                textStyle: {
-                  // color: '#000',
-                  baseline: 'bottom',
-                  fontSize: 12,
-                  fontFamily: 'SimHei,Arial, Verdana, sans-serif',
-                },
-                formatter(params) {
-                  if (opts.labelFormatter) {
-                    return eval(opts.labelFormatter).call(
-                      this,
-                      params,
-                      toolUtil
-                    );
-                  }
-                  return `${params.name}:${toolUtil.commafy(params.value, 2)}(${
-                    params.percent
-                  }%)`;
-                },
+              show: opts.labelShow,
+              position: opts.centerLabel ? 'center' : 'outside',
+              textStyle: {
+                color: '#000',
+                baseline: 'bottom',
+                fontSize: opts.centerLabel ? 24 : 12,
+                // fontWeight: opts.centerLabel ? 'bold' : 'normal',
+                fontFamily: 'SimHei,Arial, Verdana, sans-serif',
+              },
+              formatter(params: any) {
+                if (opts.labelFormatter) {
+                  return eval(opts.labelFormatter).call(this, params, toolUtil)
+                }
+                return `${params.name}:${toolUtil.commafy(params.value, 2)}(${params.percent}%)`
+              },
+            },
+            emphasis: {
+              label: {
+                show: opts.centerLabel,
+                fontSize: opts.centerLabel ? 24 : 12,
+                // fontWeight: opts.centerLabel ? 'bold' : 'normal',
               },
             },
             data: [],

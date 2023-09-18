@@ -1,6 +1,7 @@
 /**
  * Created by lijianxiong on 19/4/12.
  * v0.0.4-alpha 2023/04/12 gqd 柱状图饼图联动组件配置;
+ * v0.0.5-alpha 2023/09/18 gqd 饼图增加label位置相关配置;
  */
 import { theme } from '../../theme';
 
@@ -374,6 +375,7 @@ export const defaultConfig = {
             ],
             optionPie: {},
             legendShow: true,
+            centerLabel: false, // 是否在圆环中心动态展示label信息
             pieCenter: ['48%', '50%'],
             pieRadius: ['30%', '50%'],
             roseType: 'false',
