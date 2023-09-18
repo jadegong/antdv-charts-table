@@ -302,6 +302,7 @@ export declare const defaultConfig: {
             colorList: string[];
             optionPie: {};
             legendShow: boolean;
+            centerLabel: boolean;
             pieCenter: string[];
             pieRadius: string[];
             roseType: string;

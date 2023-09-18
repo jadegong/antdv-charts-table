@@ -65821,6 +65821,8 @@ ${C[X]}`, W++) : K += C[X]) : (Z += 1, K += C[X], X < Q - 1 && Z % G === 0 && X 
       ],
       optionPie: {},
       legendShow: !0,
+      centerLabel: !1,
+      // 是否在圆环中心动态展示label信息
       pieCenter: ["48%", "50%"],
       pieRadius: ["30%", "50%"],
       roseType: "false"
@@ -68041,31 +68043,29 @@ const _sfc_main$9 = defineComponent({
               normal: {}
             },
             roseType: opts.roseType === "false" ? !1 : opts.roseType,
+            avoidLabelOverlap: !opts.centerLabel,
             labelLine: {
-              normal: {
-                show: !0,
-                /* lineStyle: {
-                                    color: opts.labelLineColor?opts.labelLineColor:''
-                                }, */
-                length: 30
-              }
+              show: !opts.centerLabel
             },
             label: {
-              normal: {
-                show: !0,
-                textStyle: {
-                  // color: '#000',
-                  baseline: "bottom",
-                  fontSize: 12,
-                  fontFamily: "SimHei,Arial, Verdana, sans-serif"
-                },
-                formatter(params) {
-                  return opts.labelFormatter ? eval(opts.labelFormatter).call(
-                    this,
-                    params,
-                    toolUtil
-                  ) : `${params.name}:${toolUtil.commafy(params.value, 2)}(${params.percent}%)`;
-                }
+              show: opts.labelShow,
+              position: opts.centerLabel ? "center" : "outside",
+              textStyle: {
+                color: "#000",
+                baseline: "bottom",
+                fontSize: opts.centerLabel ? 24 : 12,
+                // fontWeight: opts.centerLabel ? 'bold' : 'normal',
+                fontFamily: "SimHei,Arial, Verdana, sans-serif"
+              },
+              formatter(params) {
+                return opts.labelFormatter ? eval(opts.labelFormatter).call(this, params, toolUtil) : `${params.name}:${toolUtil.commafy(params.value, 2)}(${params.percent}%)`;
+              }
+            },
+            emphasis: {
+              label: {
+                show: opts.centerLabel,
+                fontSize: opts.centerLabel ? 24 : 12
+                // fontWeight: opts.centerLabel ? 'bold' : 'normal',
               }
             },
             data: []
@@ -69382,7 +69382,7 @@ const _sfc_main$4 = defineComponent({
           formatter: "{b}: {c} ({d}%)"
         },
         data: pieData
-      }, pieBarChart.on("updateAxisPointer", function(H) {
+      }, pieBarChart.off("updateAxisPointer"), pieBarChart.on("updateAxisPointer", function(H) {
         const C = H.axesInfo[0];
         if (C) {
           let G = [];
@@ -69616,14 +69616,15 @@ const _sfc_main$3 = defineComponent({
       }
       if (data && data.length > 0) {
         if (opts.resetOrder && (xAxisData = xAxisData.sort()), data.forEach((H, C) => {
-          const G = {
+          let G = {
             type: "line",
             symbol: "emptyCircle",
             smooth: "true",
             data: [],
             name: H.name,
-            yName: H.yName
+            yName: H.yName,
             // fix bug by rjh:多折线双Y轴，optionPieLines.doubleYAxis里面的name（用于显示在y轴上面的文字）与data里面name不一致的情况时无法显示双Y轴
+            itemStyle: {}
           };
           opts.isAreaStyle ? G.itemStyle = {
             color: opts.colorList[C],
@@ -69688,7 +69689,7 @@ const _sfc_main$3 = defineComponent({
           formatter: "{b}: {c} ({d}%)"
         },
         data: pieData
-      }, pieLinesChart.on("updateAxisPointer", function(H) {
+      }, pieLinesChart.off("updateAxisPointer"), pieLinesChart.on("updateAxisPointer", function(H) {
         const C = H.axesInfo[0];
         if (C) {
           let G = [];
