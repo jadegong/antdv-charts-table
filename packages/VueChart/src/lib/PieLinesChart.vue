@@ -1,4 +1,5 @@
 <!-- v0.0.4-alpha 2023/04/12 gqd 折线图饼图联动组件; -->
+<!-- v0.0.5-alpha 2023/09/18 gqd 每次data更新后，需要移除更新事件里的函数，否则事件回调里引用的数据还是旧数据; -->
 <template>
   <div ref="domChart" style="height: 100%; width: 100%">
     <span style="display: none">{{ option.type }}</span>
@@ -86,7 +87,7 @@ export default defineComponent({
                                      }); */
               return res;
             }
-            params = params.sort((a, b) => {
+            params = params.sort((a: any, b: any) => {
               return b.value - a.value;
             });
             let res = params[0].name;
@@ -285,13 +286,14 @@ export default defineComponent({
         }
         data.forEach((item, i) => {
           // 遍历构造虚线
-          const s = {
+          let s = {
             type: 'line',
             symbol: 'emptyCircle',
             smooth: 'true',
             data: [],
             name: item.name,
             yName: item.yName, // fix bug by rjh:多折线双Y轴，optionPieLines.doubleYAxis里面的name（用于显示在y轴上面的文字）与data里面name不一致的情况时无法显示双Y轴
+            itemStyle: {},
           };
           if (opts.isAreaStyle) {
             s.itemStyle = {
@@ -422,6 +424,8 @@ export default defineComponent({
       }
 
       // Mouse hover event
+      // DONE: 每次data更新后，需要移除更新事件里的函数，否则事件回调里引用的数据还是旧数据.
+      pieLinesChart.off('updateAxisPointer')
       pieLinesChart.on('updateAxisPointer', function (event: any) {
         const xAxisInfo = event.axesInfo[0]
         if (xAxisInfo) {

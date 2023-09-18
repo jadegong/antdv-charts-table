@@ -1,4 +1,5 @@
 <!-- v0.0.4-alpha 2023/04/12 gqd 柱状图饼图联动组件; -->
+<!-- v0.0.5-alpha 2023/09/18 gqd 每次data更新后，需要移除更新事件里的函数，否则事件回调里引用的数据还是旧数据; -->
 <template>
   <div ref="domChart" style="height: 100%; width: 100%">
     <span style="display: none">{{ option.type }}</span>
@@ -56,7 +57,6 @@ export default defineComponent({
       pieBarChart.resize();
     },
     setPieBarOption(option: any) {
-      const self = this;
       const opts = toolUtil.merge(this.defaultOption, option, true);
 
       const pieBarOptionV = {
@@ -474,6 +474,8 @@ export default defineComponent({
       }
 
       // Mouse hover event
+      // DONE: 每次data更新后，需要移除更新事件里的函数，否则事件回调里引用的数据还是旧数据.
+      pieBarChart.off('updateAxisPointer')
       pieBarChart.on('updateAxisPointer', function (event: any) {
         const xAxisInfo = event.axesInfo[0]
         if (xAxisInfo) {
